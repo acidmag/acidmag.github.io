@@ -12,3 +12,17 @@ li {
   display: inline-block;
   width: 50%;
 }
+
+@media only screen and (max-width : 475px) {
+  li {
+    width: 100%;
+  }
+
+  .article-card-container {
+    background-color: grey;
+    padding: 10px;
+    margin: 2px;
+    vertical-align: middle;
+  }
+
+}
