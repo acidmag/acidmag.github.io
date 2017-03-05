@@ -1,12 +1,11 @@
 .article-card-container {
   background-color: grey;
   padding: 30px;
-  margin: 10px;
+  margin: 2px;
 }
 
 h1, h2, h3 {
   color: white;
-
 }
 
 li {

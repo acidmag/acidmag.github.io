@@ -1,10 +1,9 @@
-
 <ul>
-  <li *ngFor = "let articleCard of articleCards">
+  <li *ngFor = "let article of articles" [routerLink]="['/article', article.id]">
     <div class="article-card-container">
-      <h1>{{articleCard.title}}</h1>
-      <h2>{{articleCard.author}}</h2>
-      <h3>{{articleCard.dateCreated}}</h3>
+      <h1>{{article.title}}</h1>
+      <h2>{{article.author}}</h2>
+      <h3>Published On: {{article.dateCreated}}</h3>
     </div>
   </li>
 </ul>
