@@ -1,7 +1,13 @@
-<h1>image goes here!</h1>
+<div class="article" *ngIf="articles">
+  <h1>image goes here!</h1>
+  <h1>{{articles.title}}</h1>
+  <h3>{{articles.tagline}}</h3>
+  <h5>Author: {{articles.author}}</h5>
+  <h5> Published On: {{articles.dateCreated}}</h5>
 
-<h1>{{article.title}}</h1>
-<h2>{{article.tagline}}</h2>
-<p>{{article.author}}<p>
-<p>{{article.dateCreated}}</p>
-<p>{{article.article}}</p>
+  <p *ngFor="let paragraph of articles.article">
+    {{paragraph}}
+  </p>
+
+  <button class="back-button" (click)="goBack()">Back</button>
+</div>
