@@ -591,7 +591,7 @@ exports = module.exports = __webpack_require__(31)();
 
 
 // module
-exports.push([module.i, ".article-card-container {\n  background-color: grey;\n  padding: 30px;\n  margin: 2px;\n}\n\nh1, h2, h3 {\n  color: white;\n}\n\nli {\n  display: inline-block;\n  width: 50%;\n}\n", ""]);
+exports.push([module.i, ".article-card-container {\n  background-color: grey;\n  padding: 30px;\n  margin: 2px;\n}\n\nh1, h2, h3 {\n  color: white;\n}\n\nli {\n  display: inline-block;\n  width: 50%;\n}\n\n@media only screen and (max-width : 475px) {\n  li {\n    width: 100%;\n  }\n\n  .article-card-container {\n    background-color: grey;\n    padding: 10px;\n    margin: 2px;\n    vertical-align: middle;\n  }\n\n}\n", ""]);
 
 // exports
 
@@ -609,7 +609,7 @@ exports = module.exports = __webpack_require__(31)();
 
 
 // module
-exports.push([module.i, ".article {\n    width: 50%;\n    margin: 0 auto;\n}\n\n.back-button {\n  background-color: grey;\n  margin: 20px 0;\n  padding: 10px 20px;\n  border: none;\n  width: 100px;\n  color: white;\n  font-size: 16px;\n}\np {\n  margin: 30px 0;\n}\n", ""]);
+exports.push([module.i, ".article {\n    width: 50%;\n    margin: 0 auto;\n}\n\n.back-button {\n  background-color: grey;\n  margin: 20px 0;\n  padding: 10px 20px;\n  border: none;\n  width: 100px;\n  color: white;\n  font-size: 16px;\n}\np {\n  margin: 30px 0;\n}\n\n@media only screen and (max-width : 475px) {\n  .article {\n      width: 95%;\n      margin: 0 auto;\n  }\n\n\n}\n", ""]);
 
 // exports
 
