@@ -11,6 +11,8 @@ export class HeroComponent implements OnInit {
   constructor() {
       this.fullImagePath = '/assets/images/acid2.png'
   }
+  
+
 
   ngOnInit() {
   }
