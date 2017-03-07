@@ -1,3 +1,57 @@
+@font-face {
+  font-family: danielFont;
+  src: url('/assets/daniel.ttf');
+
+}
+
+*{
+  box-sizing: border-box;
+}
+
 img {
+  max-width: none;
+  height: 100vh;
   width: 100%;
+  padding: 30px;
+}
+
+  p {
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  bottom: 0;
+  left: 100px;
+  font: 10vw danielFont;
+  color: white;
+}
+
+@media only screen and (max-width : 425px) {
+  .imgContainer {
+    overflow: scroll;
+    padding: 0;
+    margin: 0;
+  }
+  .outsideContainer{
+    height: auto;
+    width: 100vw;
+    padding: 4%;
+  }
+
+  img {
+    max-width: none;
+    height: 95vh;
+    width: auto;
+    padding: 0;
+
+  }
+
+  p {
+    position: absolute;
+    bottom: 10px;
+    left: 30px;
+    font: 10vw danielFont;
+    color: white;
+
+  }
+
 }

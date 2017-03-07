@@ -14,6 +14,7 @@ import { ArticleCardComponent } from './article-card/article-card.component';
 import { ArticlePageComponent } from './article-page/article-page.component';
 import { ArticlesComponent } from './articles/articles.component';
 import { ArticleService }          from './article.service';
+import { NavBurgerComponent } from './nav-burger/nav-burger.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { ArticleService }          from './article.service';
     HeroComponent,
     ArticleCardComponent,
     ArticlePageComponent,
-    ArticlesComponent
+    ArticlesComponent,
+    NavBurgerComponent
   ],
 
   providers: [ ArticleService ],

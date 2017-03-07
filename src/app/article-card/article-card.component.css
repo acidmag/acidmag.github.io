@@ -13,7 +13,7 @@ li {
   width: 50%;
 }
 
-@media only screen and (max-width : 475px) {
+@media only screen and (max-width : 425px) {
   li {
     width: 100%;
   }
