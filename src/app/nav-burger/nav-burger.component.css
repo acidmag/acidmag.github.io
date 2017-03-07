@@ -1,0 +1,75 @@
+button {
+  z-index: 10;
+  position: fixed;
+  right: 90px;
+  top: 60px;
+  color: white;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.rotate {
+    -webkit-transition-duration: 1s;
+    -moz-transition-duration: 1s;
+    -o-transition-duration: 1s;
+     transition-duration: 0.3s;
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    -o-transition-property: -o-transform;
+     transition-property: transform;
+}
+
+.rotated {
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+     transform: rotate(45deg);
+}
+
+.circle-plus {
+  height: 6em;
+  width: 6em;
+  font-size: 1em/*Will change icon size*/;
+}
+
+.circle-plus .circle {
+  position: relative;
+  width: 4.5em;
+  height: 4.5em;
+  border-radius: 100%;
+  border: solid .3em white;
+}
+
+.circle-plus .circle .horizontal {
+  position: absolute;
+  background-color: white;
+  width: 2.2em;
+  height: .3em;
+  top: 2.1em;
+  left: 1.05em;
+}
+
+.circle-plus .circle .vertical {
+  position: absolute;
+  background-color: white;
+  width: .3em;
+  height: 2.2em;
+  top: 1.05em;
+  left: 2em;
+}
+
+.navigation {
+  z-index: 10;
+  position: fixed;
+  right: 100px;
+  top: 150px;
+  color: white;
+}
+
+.navigation ul {
+  list-style-type: none;
+}
+
+.navigation li {
+  text-align: right;
+}

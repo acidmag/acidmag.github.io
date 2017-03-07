@@ -1,3 +1,26 @@
+@font-face {
+  font-family: danielFont;
+  src: url('/assets/daniel.ttf');
+
+}
+
+*{
+  box-sizing: border-box;
+}
+
 img {
+  max-width: none;
+  height: 100vh;
   width: 100%;
+  padding: 30px;
+}
+
+.acid-text p {
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  bottom: 0;
+  left: 100px;
+  font: 10vw danielFont;
+  color: white;
 }

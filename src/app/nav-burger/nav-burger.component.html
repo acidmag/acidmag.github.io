@@ -1,0 +1,16 @@
+<!-- <button class="nav-burger">+</button> -->
+<button (click)="buttonClicked()" class="">
+  <div class="circle-plus">
+    <div [ngClass]="{'rotated': clicked}" class="circle rotate">
+      <div class="horizontal"></div>
+      <div class="vertical"></div>
+    </div>
+  </div>
+</button>
+<div *ngIf="clicked" class="navigation">
+  <ul>
+    <li>One</li>
+    <li>One</li>
+    <li>One</li>
+  </ul>
+</div>
