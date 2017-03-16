@@ -22,6 +22,7 @@
   color: white;
 }
 
+
 .search-results{
   color: white;
   padding: 10px;
@@ -32,3 +33,4 @@
 .search-results:hover {
   cursor: pointer;
 }
+
