@@ -20,7 +20,8 @@ export class ArticleService {
 
   constructor(private http: Http) { }
 
-  //Get all articles
+
+  // Get all articles
   getArticles(): Promise<Articles[]> {
     return this.http.get(this.articlesUrl)
                 .toPromise()
@@ -38,7 +39,8 @@ export class ArticleService {
   }
 
 
-  //Get article by ID
+
+  // Get article by ID
   getArticle(id: number): Promise<Articles> {
       const url = `${this.articlesUrl}/${id}`;
       return this.http.get(url)
@@ -47,7 +49,8 @@ export class ArticleService {
         .catch(this.handleError);
   }
 
-  //Update Article
+
+  // Update Article
   update(articles: Articles): Promise<Articles> {
     const url = `${this.articlesUrl}/${articles.id}`;
     return this.http
@@ -57,7 +60,7 @@ export class ArticleService {
       .catch(this.handleError);
   }
 
-  //Create an article
+  // Create an article
   create(article: Articles): Promise<Articles> {
     return this.http
       .post(this.articlesUrl, JSON.stringify(article), {headers: this.headers})
@@ -66,7 +69,8 @@ export class ArticleService {
       .catch(this.handleError);
   }
 
-  //Delete an article
+
+  // Delete an article
   delete(id: number): Promise<void> {
     const url = `${this.articlesUrl}/${id}`;
     return this.http.delete(url, {headers: this.headers})

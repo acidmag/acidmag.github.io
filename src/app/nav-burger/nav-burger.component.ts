@@ -15,7 +15,6 @@ export class NavBurgerComponent implements OnInit {
   }
 
   buttonClicked(): void {
-    console.log('clicked');
     this.clicked = !this.clicked;
   }
 

@@ -212,7 +212,8 @@ export class InMemoryDataService implements InMemoryDbService {
         }
 
       ];
+      
+      return { articles };
 
-      return {articles};
     }
   }
