@@ -20,7 +20,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 
 
 @Component({
-  selector: 'article-search',
+  selector: 'app-article-search',
   templateUrl: './article-search.component.html',
   styleUrls: ['./article-search.component.css'],
   providers: [ArticleSearchService]

@@ -1,8 +1,13 @@
+
 <div id="search-component">
-  <input #searchBox id="search-box" (keyup)="search(searchBox.value)" class="search-input" placeholder="Search"/>
+  <input #searchBox id="search-box" (keyup)="search(searchBox.value)" class="search-input" placeholder="Search">
 </div>
-<div *ngFor="let article of articles | async"
+
+<div *ngFor="let article of articles | async let i=index"
   [routerLink]="['/article', article.id]"
   class="search-results">
-  {{article.title}}
+  <template [ngIf]= "i < 4">
+    {{article.title}}
+  </template>
+
 </div>

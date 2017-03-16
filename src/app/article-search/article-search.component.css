@@ -22,17 +22,13 @@
   color: white;
 }
 
-.search-result{
-  border-bottom: 1px solid gray;
-  border-left: 1px solid gray;
-  border-right: 1px solid gray;
-  width:195px;
-  height: 16px;
-  padding: 5px;
-  background-color: white;
-  cursor: pointer;
+.search-results{
+  color: white;
+  padding: 10px;
+  margin-top: 4vh;
+  font: 20px 'Helvetica', sans-serif;
 }
-.search-result:hover {
-  color: #eee;
-  background-color: #607D8B;
+
+.search-results:hover {
+  cursor: pointer;
 }
