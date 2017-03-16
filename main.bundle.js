@@ -32,7 +32,7 @@ var ArticleService = (function () {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
     };
-    //Get all articles
+    // Get all articles
     ArticleService.prototype.getArticles = function () {
         return this.http.get(this.articlesUrl)
             .toPromise()
@@ -46,7 +46,7 @@ var ArticleService = (function () {
             setTimeout(function () { return resolve(_this.getArticles()); }, 2000);
         });
     };
-    //Get article by ID
+    // Get article by ID
     ArticleService.prototype.getArticle = function (id) {
         var url = this.articlesUrl + "/" + id;
         return this.http.get(url)
@@ -54,7 +54,7 @@ var ArticleService = (function () {
             .then(function (response) { return response.json().data; })
             .catch(this.handleError);
     };
-    //Update Article
+    // Update Article
     ArticleService.prototype.update = function (articles) {
         var url = this.articlesUrl + "/" + articles.id;
         return this.http
@@ -63,7 +63,7 @@ var ArticleService = (function () {
             .then(function () { return articles; })
             .catch(this.handleError);
     };
-    //Create an article
+    // Create an article
     ArticleService.prototype.create = function (article) {
         return this.http
             .post(this.articlesUrl, JSON.stringify(article), { headers: this.headers })
@@ -71,7 +71,7 @@ var ArticleService = (function () {
             .then(function (res) { return res.json().data; })
             .catch(this.handleError);
     };
-    //Delete an article
+    // Delete an article
     ArticleService.prototype.delete = function (id) {
         var url = this.articlesUrl + "/" + id;
         return this.http.delete(url, { headers: this.headers })
@@ -472,10 +472,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var ArticleSearchService = (function () {
     function ArticleSearchService(http) {
         this.http = http;
+        this.articlesUrl = 'api/articles'; // URL to web api
     }
     ArticleSearchService.prototype.search = function (term) {
         return this.http
-            .get('app/articles/?tagline=${term}')
+            .get(this.articlesUrl + "/?article=" + term)
             .map(function (response) { return response.json().data; });
     };
     ArticleSearchService = __decorate([
@@ -554,7 +555,7 @@ var ArticleSearchComponent = (function () {
     };
     ArticleSearchComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Component */])({
-            selector: 'article-search',
+            selector: 'app-article-search',
             template: __webpack_require__(538),
             styles: [__webpack_require__(528)],
             providers: [__WEBPACK_IMPORTED_MODULE_2__article_search_service__["a" /* ArticleSearchService */]]
@@ -927,7 +928,6 @@ var NavBurgerComponent = (function () {
     NavBurgerComponent.prototype.ngOnInit = function () {
     };
     NavBurgerComponent.prototype.buttonClicked = function () {
-        console.log('clicked');
         this.clicked = !this.clicked;
     };
     NavBurgerComponent = __decorate([
@@ -1022,7 +1022,7 @@ exports = module.exports = __webpack_require__(19)();
 
 
 // module
-exports.push([module.i, ".search-input {\n  width: 90px;\n  color: white;\n  -webkit-box-ordinal-group: NaN;\n      -ms-flex-order: none;\n          order: none;\n  border: none;\n  outline: none;\n  padding: 10px;\n  margin: 0;\n  text-align: right;\n  background-color: rgba(100, 100, 100, 0.0);\n  font: 20px 'Helvetica', sans-serif;\n  -webkit-transition: width 0.3s, border-bottom, 0.5s;\n  transition: width 0.3s, border-bottom, 0.5s;\n  -webkit-transition-timing-function: ease-in;\n          transition-timing-function: ease-in;\n}\n\n.search-input:focus {\n  width: 500px;\n  background-color: rgba(100, 100, 100, 0.3);\n}\n\n::-webkit-input-placeholder { /* Chrome */\n  color: white;\n}\n\n.search-result{\n  border-bottom: 1px solid gray;\n  border-left: 1px solid gray;\n  border-right: 1px solid gray;\n  width:195px;\n  height: 16px;\n  padding: 5px;\n  background-color: white;\n  cursor: pointer;\n}\n.search-result:hover {\n  color: #eee;\n  background-color: #607D8B;\n}\n", ""]);
+exports.push([module.i, ".search-input {\n  width: 90px;\n  color: white;\n  -webkit-box-ordinal-group: NaN;\n      -ms-flex-order: none;\n          order: none;\n  border: none;\n  outline: none;\n  padding: 10px;\n  margin: 0;\n  text-align: right;\n  background-color: rgba(100, 100, 100, 0.0);\n  font: 20px 'Helvetica', sans-serif;\n  -webkit-transition: width 0.3s, border-bottom, 0.5s;\n  transition: width 0.3s, border-bottom, 0.5s;\n  -webkit-transition-timing-function: ease-in;\n          transition-timing-function: ease-in;\n}\n\n.search-input:focus {\n  width: 500px;\n  background-color: rgba(100, 100, 100, 0.3);\n}\n\n::-webkit-input-placeholder { /* Chrome */\n  color: white;\n}\n\n\n.search-results{\n  color: white;\n  padding: 10px;\n  margin-top: 4vh;\n  font: 20px 'Helvetica', sans-serif;\n}\n\n.search-results:hover {\n  cursor: pointer;\n}\n\n", ""]);
 
 // exports
 
@@ -1146,7 +1146,7 @@ module.exports = "<div class=\"article\" *ngIf=\"articles\">\n  <h1>image goes h
 /***/ 538:
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"search-component\">\n  <input #searchBox id=\"search-box\" (keyup)=\"search(searchBox.value)\" class=\"search-input\" placeholder=\"Search\"/>\n</div>\n<div *ngFor=\"let article of articles | async\"\n  [routerLink]=\"['/article', article.id]\"\n  class=\"search-results\">\n  {{article.title}}\n</div>\n"
+module.exports = "<div id=\"search-component\">\n  <input #searchBox id=\"search-box\" (keyup)=\"search(searchBox.value)\" class=\"search-input\" placeholder=\"Search\">\n</div>\n\n<div *ngFor=\"let article of articles | async let i=index\"\n  [routerLink]=\"['/article', article.id]\"\n  class=\"search-results\">\n  <template [ngIf]= \"i < 4\">\n    {{article.title}}\n  </template>\n</div>\n"
 
 /***/ }),
 
@@ -1181,7 +1181,7 @@ module.exports = "<p>\n  <input type=\"text\">\n</p>\n"
 /***/ 543:
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <button class=\"nav-burger\">+</button> -->\n<button (click)=\"buttonClicked()\" class='menu-button'>\n  MENU\n</button>\n<div *ngIf=\"clicked\" class=\"navigation\">\n  <ul>\n    <li>About Us</li>\n    <li>Contact Us</li>\n    <li>Read</li>\n    <li>\n      <article-search></article-search>\n    </li>\n  </ul>\n</div>\n"
+module.exports = "<!-- <button class=\"nav-burger\">+</button> -->\n<button (click)=\"buttonClicked()\" class='menu-button'>\n  MENU\n</button>\n<div *ngIf=\"clicked\" class=\"navigation\">\n  <ul>\n    <li>About Us</li>\n    <li>Contact Us</li>\n    <li>Read</li>\n    <li>\n      <app-article-search></app-article-search>\n    </li>\n  </ul>\n</div>\n"
 
 /***/ }),
 
