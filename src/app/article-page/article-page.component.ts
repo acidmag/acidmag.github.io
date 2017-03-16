@@ -7,7 +7,7 @@ import { Articles } from '../articles';
 import { ArticleService } from '../article.service';
 
 @Component({
-  
+
   selector: 'app-article-page',
   templateUrl: './article-page.component.html',
   styleUrls: ['./article-page.component.css']
