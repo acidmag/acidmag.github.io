@@ -1,11 +1,13 @@
 webpackJsonp([1,4],{
 
-/***/ 130:
+/***/ 132:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mock_articles__ = __webpack_require__(459);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_toPromise__ = __webpack_require__(554);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_toPromise__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArticleService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -18,11 +20,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+// import { ARTICLES } from './mock-articles'
 var ArticleService = (function () {
-    function ArticleService() {
+    function ArticleService(http) {
+        this.http = http;
+        this.articlesUrl = 'api/articles'; // URL to web api
+        this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'Content-Type': 'application/json' });
     }
+    ArticleService.prototype.handleError = function (error) {
+        console.error('An error occurred', error); // for demo purposes only
+        return Promise.reject(error.message || error);
+    };
+    //Get all articles
     ArticleService.prototype.getArticles = function () {
-        return Promise.resolve(__WEBPACK_IMPORTED_MODULE_1__mock_articles__["a" /* ARTICLES */]);
+        return this.http.get(this.articlesUrl)
+            .toPromise()
+            .then(function (response) { return response.json().data; })
+            .catch(this.handleError);
     };
     ArticleService.prototype.getArticlesSlowly = function () {
         var _this = this;
@@ -31,30 +46,60 @@ var ArticleService = (function () {
             setTimeout(function () { return resolve(_this.getArticles()); }, 2000);
         });
     };
+    //Get article by ID
     ArticleService.prototype.getArticle = function (id) {
-        return this.getArticles()
-            .then(function (articles) { return articles.find(function (articles) { return articles.id === id; }); });
+        var url = this.articlesUrl + "/" + id;
+        return this.http.get(url)
+            .toPromise()
+            .then(function (response) { return response.json().data; })
+            .catch(this.handleError);
+    };
+    //Update Article
+    ArticleService.prototype.update = function (articles) {
+        var url = this.articlesUrl + "/" + articles.id;
+        return this.http
+            .put(url, JSON.stringify(articles), { headers: this.headers })
+            .toPromise()
+            .then(function () { return articles; })
+            .catch(this.handleError);
+    };
+    //Create an article
+    ArticleService.prototype.create = function (article) {
+        return this.http
+            .post(this.articlesUrl, JSON.stringify(article), { headers: this.headers })
+            .toPromise()
+            .then(function (res) { return res.json().data; })
+            .catch(this.handleError);
+    };
+    //Delete an article
+    ArticleService.prototype.delete = function (id) {
+        var url = this.articlesUrl + "/" + id;
+        return this.http.delete(url, { headers: this.headers })
+            .toPromise()
+            .then(function () { return null; })
+            .catch(this.handleError);
     };
     ArticleService = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Http */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Http */]) === 'function' && _a) || Object])
     ], ArticleService);
     return ArticleService;
+    var _a;
 }());
 //# sourceMappingURL=article.service.js.map
 
 /***/ }),
 
-/***/ 303:
+/***/ 306:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_add_operator_switchMap__ = __webpack_require__(535);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_add_operator_switchMap__ = __webpack_require__(553);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_add_operator_switchMap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rxjs_add_operator_switchMap__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(128);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__article_service__ = __webpack_require__(130);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__article_service__ = __webpack_require__(132);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArticlePageComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -86,12 +131,12 @@ var ArticlePageComponent = (function () {
         this.location.back();
     };
     ArticlePageComponent = __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["d" /* Component */])({
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Q" /* Component */])({
             selector: 'app-article-page',
-            template: __webpack_require__(526),
-            styles: [__webpack_require__(517)]
+            template: __webpack_require__(537),
+            styles: [__webpack_require__(527)]
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4__article_service__["a" /* ArticleService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4__article_service__["a" /* ArticleService */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__angular_common__["a" /* Location */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_common__["a" /* Location */]) === 'function' && _c) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4__article_service__["a" /* ArticleService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4__article_service__["a" /* ArticleService */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__angular_common__["c" /* Location */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__angular_common__["c" /* Location */]) === 'function' && _c) || Object])
     ], ArticlePageComponent);
     return ArticlePageComponent;
     var _a, _b, _c;
@@ -100,13 +145,13 @@ var ArticlePageComponent = (function () {
 
 /***/ }),
 
-/***/ 304:
+/***/ 307:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(128);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__article_service__ = __webpack_require__(130);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__article_service__ = __webpack_require__(132);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArticlesComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -140,10 +185,10 @@ var ArticlesComponent = (function () {
         this.router.navigate(['/article', this.selectedArticle.id]);
     };
     ArticlesComponent = __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* Component */])({
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Component */])({
             selector: 'articles',
-            template: __webpack_require__(527),
-            styles: [__webpack_require__(518)]
+            template: __webpack_require__(539),
+            styles: [__webpack_require__(529)]
         }), 
         __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__article_service__["a" /* ArticleService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__article_service__["a" /* ArticleService */]) === 'function' && _b) || Object])
     ], ArticlesComponent);
@@ -154,7 +199,7 @@ var ArticlesComponent = (function () {
 
 /***/ }),
 
-/***/ 333:
+/***/ 340:
 /***/ (function(module, exports) {
 
 function webpackEmptyContext(req) {
@@ -163,20 +208,20 @@ function webpackEmptyContext(req) {
 webpackEmptyContext.keys = function() { return []; };
 webpackEmptyContext.resolve = webpackEmptyContext;
 module.exports = webpackEmptyContext;
-webpackEmptyContext.id = 333;
+webpackEmptyContext.id = 340;
 
 
 /***/ }),
 
-/***/ 334:
+/***/ 341:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(422);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(454);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(461);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(428);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(460);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(469);
 
 
 
@@ -189,14 +234,14 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dyna
 
 /***/ }),
 
-/***/ 452:
+/***/ 458:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(128);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__article_page_article_page_component__ = __webpack_require__(303);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__articles_articles_component__ = __webpack_require__(304);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__article_page_article_page_component__ = __webpack_require__(306);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__articles_articles_component__ = __webpack_require__(307);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppRoutingModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -232,12 +277,12 @@ var AppRoutingModule = (function () {
 
 /***/ }),
 
-/***/ 453:
+/***/ 459:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(128);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(84);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -264,10 +309,10 @@ var AppComponent = (function () {
         });
     };
     AppComponent = __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* Component */])({
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Component */])({
             selector: 'app-root',
-            template: __webpack_require__(524),
-            styles: [__webpack_require__(515)]
+            template: __webpack_require__(535),
+            styles: [__webpack_require__(525)]
         }), 
         __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */]) === 'function' && _a) || Object])
     ], AppComponent);
@@ -278,24 +323,27 @@ var AppComponent = (function () {
 
 /***/ }),
 
-/***/ 454:
+/***/ 460:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(126);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(129);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(412);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(418);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_routing_module__ = __webpack_require__(452);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_component__ = __webpack_require__(453);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__button_button_component__ = __webpack_require__(456);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__input_bar_input_bar_component__ = __webpack_require__(458);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__hero_hero_component__ = __webpack_require__(457);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__article_card_article_card_component__ = __webpack_require__(455);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__article_page_article_page_component__ = __webpack_require__(303);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__articles_articles_component__ = __webpack_require__(304);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__article_service__ = __webpack_require__(130);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__nav_burger_nav_burger_component__ = __webpack_require__(460);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(419);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_routing_module__ = __webpack_require__(458);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angular_in_memory_web_api__ = __webpack_require__(471);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__in_memory_data_service__ = __webpack_require__(466);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__(459);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__button_button_component__ = __webpack_require__(464);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__input_bar_input_bar_component__ = __webpack_require__(467);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__hero_hero_component__ = __webpack_require__(465);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__article_card_article_card_component__ = __webpack_require__(461);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__article_page_article_page_component__ = __webpack_require__(306);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__articles_articles_component__ = __webpack_require__(307);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__article_service__ = __webpack_require__(132);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__nav_burger_nav_burger_component__ = __webpack_require__(468);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__article_search_article_search_component__ = __webpack_require__(463);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -320,6 +368,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
+
 var AppModule = (function () {
     function AppModule() {
     }
@@ -329,20 +380,22 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
                 __WEBPACK_IMPORTED_MODULE_3__angular_http__["a" /* HttpModule */],
+                __WEBPACK_IMPORTED_MODULE_5_angular_in_memory_web_api__["a" /* InMemoryWebApiModule */].forRoot(__WEBPACK_IMPORTED_MODULE_6__in_memory_data_service__["a" /* InMemoryDataService */]),
                 __WEBPACK_IMPORTED_MODULE_4__app_routing_module__["a" /* AppRoutingModule */]
             ],
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_5__app_component__["a" /* AppComponent */],
-                __WEBPACK_IMPORTED_MODULE_6__button_button_component__["a" /* ButtonComponent */],
-                __WEBPACK_IMPORTED_MODULE_7__input_bar_input_bar_component__["a" /* InputBarComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__hero_hero_component__["a" /* HeroComponent */],
-                __WEBPACK_IMPORTED_MODULE_9__article_card_article_card_component__["a" /* ArticleCardComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__article_page_article_page_component__["a" /* ArticlePageComponent */],
-                __WEBPACK_IMPORTED_MODULE_11__articles_articles_component__["a" /* ArticlesComponent */],
-                __WEBPACK_IMPORTED_MODULE_13__nav_burger_nav_burger_component__["a" /* NavBurgerComponent */]
+                __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */],
+                __WEBPACK_IMPORTED_MODULE_8__button_button_component__["a" /* ButtonComponent */],
+                __WEBPACK_IMPORTED_MODULE_9__input_bar_input_bar_component__["a" /* InputBarComponent */],
+                __WEBPACK_IMPORTED_MODULE_10__hero_hero_component__["a" /* HeroComponent */],
+                __WEBPACK_IMPORTED_MODULE_11__article_card_article_card_component__["a" /* ArticleCardComponent */],
+                __WEBPACK_IMPORTED_MODULE_12__article_page_article_page_component__["a" /* ArticlePageComponent */],
+                __WEBPACK_IMPORTED_MODULE_13__articles_articles_component__["a" /* ArticlesComponent */],
+                __WEBPACK_IMPORTED_MODULE_15__nav_burger_nav_burger_component__["a" /* NavBurgerComponent */],
+                __WEBPACK_IMPORTED_MODULE_16__article_search_article_search_component__["a" /* ArticleSearchComponent */]
             ],
-            providers: [__WEBPACK_IMPORTED_MODULE_12__article_service__["a" /* ArticleService */]],
-            bootstrap: [__WEBPACK_IMPORTED_MODULE_5__app_component__["a" /* AppComponent */]]
+            providers: [__WEBPACK_IMPORTED_MODULE_14__article_service__["a" /* ArticleService */]],
+            bootstrap: [__WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */]]
         }), 
         __metadata('design:paramtypes', [])
     ], AppModule);
@@ -352,12 +405,12 @@ var AppModule = (function () {
 
 /***/ }),
 
-/***/ 455:
+/***/ 461:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__article_service__ = __webpack_require__(130);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__article_service__ = __webpack_require__(132);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArticleCardComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -381,10 +434,10 @@ var ArticleCardComponent = (function () {
             .then(function (articles) { return _this.articles = articles; });
     };
     ArticleCardComponent = __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* Component */])({
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Component */])({
             selector: 'app-article-card',
-            template: __webpack_require__(525),
-            styles: [__webpack_require__(516)]
+            template: __webpack_require__(536),
+            styles: [__webpack_require__(526)]
         }), 
         __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__article_service__["a" /* ArticleService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__article_service__["a" /* ArticleService */]) === 'function' && _a) || Object])
     ], ArticleCardComponent);
@@ -395,7 +448,127 @@ var ArticleCardComponent = (function () {
 
 /***/ }),
 
-/***/ 456:
+/***/ 462:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(552);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArticleSearchService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var ArticleSearchService = (function () {
+    function ArticleSearchService(http) {
+        this.http = http;
+    }
+    ArticleSearchService.prototype.search = function (term) {
+        return this.http
+            .get('app/articles/?tagline=${term}')
+            .map(function (response) { return response.json().data; });
+    };
+    ArticleSearchService = __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(), 
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Http */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Http */]) === 'function' && _a) || Object])
+    ], ArticleSearchService);
+    return ArticleSearchService;
+    var _a;
+}());
+//# sourceMappingURL=article-search.service.js.map
+
+/***/ }),
+
+/***/ 463:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__article_search_service__ = __webpack_require__(462);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_Subject__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_Subject__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_of__ = __webpack_require__(547);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_of__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__ = __webpack_require__(548);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_debounceTime__ = __webpack_require__(549);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_debounceTime___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_debounceTime__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_add_operator_distinctUntilChanged__ = __webpack_require__(551);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_add_operator_distinctUntilChanged___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_rxjs_add_operator_distinctUntilChanged__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArticleSearchComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+
+var ArticleSearchComponent = (function () {
+    function ArticleSearchComponent(articleSearchService, router) {
+        this.articleSearchService = articleSearchService;
+        this.router = router;
+        this.searchTerms = new __WEBPACK_IMPORTED_MODULE_4_rxjs_Subject__["Subject"]();
+    }
+    // Push a search term into the observable stream.
+    ArticleSearchComponent.prototype.search = function (term) {
+        this.searchTerms.next(term);
+    };
+    ArticleSearchComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.articles = this.searchTerms
+            .debounceTime(100)
+            .distinctUntilChanged()
+            .switchMap(function (term) { return term ? _this.articleSearchService.search(term) : __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__["Observable"].of([]); })
+            .catch(function (error) {
+            console.log(error);
+            return __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__["Observable"].of([]);
+        });
+    };
+    ArticleSearchComponent.prototype.gotoDetail = function (article) {
+        var link = ['/article', article.id];
+        this.router.navigate(link);
+    };
+    ArticleSearchComponent = __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Component */])({
+            selector: 'article-search',
+            template: __webpack_require__(538),
+            styles: [__webpack_require__(528)],
+            providers: [__WEBPACK_IMPORTED_MODULE_2__article_search_service__["a" /* ArticleSearchService */]]
+        }), 
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__article_search_service__["a" /* ArticleSearchService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__article_search_service__["a" /* ArticleSearchService */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */]) === 'function' && _b) || Object])
+    ], ArticleSearchComponent);
+    return ArticleSearchComponent;
+    var _a, _b;
+}());
+//# sourceMappingURL=article-search.component.js.map
+
+/***/ }),
+
+/***/ 464:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -420,10 +593,10 @@ var ButtonComponent = (function () {
         console.log('clicked');
     };
     ButtonComponent = __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* Component */])({
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Component */])({
             selector: 'app-button',
-            template: __webpack_require__(528),
-            styles: [__webpack_require__(519)]
+            template: __webpack_require__(540),
+            styles: [__webpack_require__(530)]
         }), 
         __metadata('design:paramtypes', [])
     ], ButtonComponent);
@@ -433,7 +606,7 @@ var ButtonComponent = (function () {
 
 /***/ }),
 
-/***/ 457:
+/***/ 465:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -456,10 +629,10 @@ var HeroComponent = (function () {
     HeroComponent.prototype.ngOnInit = function () {
     };
     HeroComponent = __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* Component */])({
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Component */])({
             selector: 'app-hero',
-            template: __webpack_require__(529),
-            styles: [__webpack_require__(520)]
+            template: __webpack_require__(541),
+            styles: [__webpack_require__(531)]
         }), 
         __metadata('design:paramtypes', [])
     ], HeroComponent);
@@ -469,7 +642,234 @@ var HeroComponent = (function () {
 
 /***/ }),
 
-/***/ 458:
+/***/ 466:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InMemoryDataService; });
+var InMemoryDataService = (function () {
+    function InMemoryDataService() {
+    }
+    InMemoryDataService.prototype.createDb = function () {
+        var articles = [
+            {
+                id: 1,
+                title: "Article 1",
+                author: "Author 1",
+                tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                dateCreated: "03/02/2017",
+                article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
+                    "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
+                    "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
+                    "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
+                    "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
+                ]
+            },
+            {
+                id: 2,
+                title: "Article 2",
+                author: "Author 2",
+                tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                dateCreated: "03/02/2017",
+                article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
+                    "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
+                    "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
+                    "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
+                    "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
+                ]
+            },
+            {
+                id: 3,
+                title: "Article 3",
+                author: "Author 3",
+                tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                dateCreated: "03/02/2017",
+                article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
+                    "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
+                    "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
+                    "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
+                    "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
+                ]
+            },
+            {
+                id: 4,
+                title: "Article 4",
+                author: "Author 4",
+                tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                dateCreated: "03/02/2017",
+                article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
+                    "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
+                    "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
+                    "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
+                    "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
+                ]
+            },
+            {
+                id: 1,
+                title: "Article 1",
+                author: "Author 1",
+                tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                dateCreated: "03/02/2017",
+                article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
+                    "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
+                    "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
+                    "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
+                    "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
+                ]
+            },
+            {
+                id: 2,
+                title: "Article 2",
+                author: "Author 2",
+                tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                dateCreated: "03/02/2017",
+                article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
+                    "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
+                    "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
+                    "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
+                    "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
+                ]
+            },
+            {
+                id: 3,
+                title: "Article 3",
+                author: "Author 3",
+                tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                dateCreated: "03/02/2017",
+                article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
+                    "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
+                    "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
+                    "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
+                    "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
+                ]
+            },
+            {
+                id: 4,
+                title: "Article 4",
+                author: "Author 4",
+                tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                dateCreated: "03/02/2017",
+                article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
+                    "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
+                    "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
+                    "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
+                    "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
+                ]
+            },
+            {
+                id: 1,
+                title: "Article 1",
+                author: "Author 1",
+                tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                dateCreated: "03/02/2017",
+                article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
+                    "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
+                    "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
+                    "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
+                    "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
+                ]
+            },
+            {
+                id: 2,
+                title: "Article 2",
+                author: "Author 2",
+                tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                dateCreated: "03/02/2017",
+                article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
+                    "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
+                    "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
+                    "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
+                    "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
+                ]
+            },
+            {
+                id: 3,
+                title: "Article 3",
+                author: "Author 3",
+                tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                dateCreated: "03/02/2017",
+                article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
+                    "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
+                    "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
+                    "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
+                    "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
+                ]
+            },
+            {
+                id: 4,
+                title: "Article 4",
+                author: "Author 4",
+                tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                dateCreated: "03/02/2017",
+                article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
+                    "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
+                    "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
+                    "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
+                    "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
+                ]
+            },
+            {
+                id: 1,
+                title: "Article 1",
+                author: "Author 1",
+                tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                dateCreated: "03/02/2017",
+                article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
+                    "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
+                    "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
+                    "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
+                    "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
+                ]
+            },
+            {
+                id: 2,
+                title: "Article 2",
+                author: "Author 2",
+                tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                dateCreated: "03/02/2017",
+                article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
+                    "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
+                    "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
+                    "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
+                    "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
+                ]
+            },
+            {
+                id: 3,
+                title: "Article 3",
+                author: "Author 3",
+                tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                dateCreated: "03/02/2017",
+                article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
+                    "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
+                    "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
+                    "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
+                    "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
+                ]
+            },
+            {
+                id: 4,
+                title: "Article 4",
+                author: "Author 4",
+                tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                dateCreated: "03/02/2017",
+                article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
+                    "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
+                    "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
+                    "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
+                    "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
+                ]
+            }
+        ];
+        return { articles: articles };
+    };
+    return InMemoryDataService;
+}());
+//# sourceMappingURL=in-memory-data.service.js.map
+
+/***/ }),
+
+/***/ 467:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -491,10 +891,10 @@ var InputBarComponent = (function () {
     InputBarComponent.prototype.ngOnInit = function () {
     };
     InputBarComponent = __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* Component */])({
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Component */])({
             selector: 'app-input-bar',
-            template: __webpack_require__(530),
-            styles: [__webpack_require__(521)]
+            template: __webpack_require__(542),
+            styles: [__webpack_require__(532)]
         }), 
         __metadata('design:paramtypes', [])
     ], InputBarComponent);
@@ -504,226 +904,7 @@ var InputBarComponent = (function () {
 
 /***/ }),
 
-/***/ 459:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ARTICLES; });
-var ARTICLES = [
-    {
-        id: 1,
-        title: "Article 1",
-        author: "Author 1",
-        tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        dateCreated: "03/02/2017",
-        article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
-            "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
-            "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
-            "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
-            "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
-        ]
-    },
-    {
-        id: 2,
-        title: "Article 2",
-        author: "Author 2",
-        tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        dateCreated: "03/02/2017",
-        article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
-            "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
-            "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
-            "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
-            "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
-        ]
-    },
-    {
-        id: 3,
-        title: "Article 3",
-        author: "Author 3",
-        tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        dateCreated: "03/02/2017",
-        article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
-            "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
-            "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
-            "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
-            "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
-        ]
-    },
-    {
-        id: 4,
-        title: "Article 4",
-        author: "Author 4",
-        tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        dateCreated: "03/02/2017",
-        article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
-            "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
-            "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
-            "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
-            "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
-        ]
-    },
-    {
-        id: 1,
-        title: "Article 1",
-        author: "Author 1",
-        tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        dateCreated: "03/02/2017",
-        article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
-            "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
-            "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
-            "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
-            "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
-        ]
-    },
-    {
-        id: 2,
-        title: "Article 2",
-        author: "Author 2",
-        tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        dateCreated: "03/02/2017",
-        article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
-            "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
-            "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
-            "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
-            "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
-        ]
-    },
-    {
-        id: 3,
-        title: "Article 3",
-        author: "Author 3",
-        tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        dateCreated: "03/02/2017",
-        article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
-            "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
-            "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
-            "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
-            "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
-        ]
-    },
-    {
-        id: 4,
-        title: "Article 4",
-        author: "Author 4",
-        tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        dateCreated: "03/02/2017",
-        article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
-            "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
-            "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
-            "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
-            "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
-        ]
-    },
-    {
-        id: 1,
-        title: "Article 1",
-        author: "Author 1",
-        tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        dateCreated: "03/02/2017",
-        article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
-            "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
-            "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
-            "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
-            "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
-        ]
-    },
-    {
-        id: 2,
-        title: "Article 2",
-        author: "Author 2",
-        tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        dateCreated: "03/02/2017",
-        article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
-            "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
-            "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
-            "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
-            "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
-        ]
-    },
-    {
-        id: 3,
-        title: "Article 3",
-        author: "Author 3",
-        tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        dateCreated: "03/02/2017",
-        article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
-            "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
-            "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
-            "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
-            "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
-        ]
-    },
-    {
-        id: 4,
-        title: "Article 4",
-        author: "Author 4",
-        tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        dateCreated: "03/02/2017",
-        article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
-            "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
-            "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
-            "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
-            "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
-        ]
-    },
-    {
-        id: 1,
-        title: "Article 1",
-        author: "Author 1",
-        tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        dateCreated: "03/02/2017",
-        article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
-            "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
-            "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
-            "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
-            "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
-        ]
-    },
-    {
-        id: 2,
-        title: "Article 2",
-        author: "Author 2",
-        tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        dateCreated: "03/02/2017",
-        article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
-            "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
-            "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
-            "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
-            "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
-        ]
-    },
-    {
-        id: 3,
-        title: "Article 3",
-        author: "Author 3",
-        tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        dateCreated: "03/02/2017",
-        article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
-            "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
-            "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
-            "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
-            "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
-        ]
-    },
-    {
-        id: 4,
-        title: "Article 4",
-        author: "Author 4",
-        tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        dateCreated: "03/02/2017",
-        article: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a lacus purus. Maecenas vel luctus urna. Nullam malesuada sapien eu leo fermentum, ac vulputate leo tempor. Sed sem elit, tempor sed libero quis, consequat ultricies nisi. Integer pulvinar facilisis ornare. In ultrices risus quam, nec sagittis mauris feugiat et. Vestibulum at orci quis quam commodo efficitur. Aliquam non laoreet odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus interdum mauris molestie dictum molestie. Ut eget leo lacus. In euismod risus ac sollicitudin suscipit. Aenean nec nibh viverra, sodales purus vel, gravida velit. Cras euismod condimentum odio sed sollicitudin. Cras ultrices massa id nunc mollis, vel tristique nunc dignissim.",
-            "Praesent eget tincidunt mauris. Ut blandit ipsum non lectus dictum dictum. Etiam vel purus dui. Mauris vulputate nisi ipsum. Curabitur euismod fringilla pretium. Morbi aliquam odio sit amet mauris maximus tincidunt sit amet a leo. Phasellus eget risus orci. Praesent interdum, odio ut congue mattis, eros velit gravida eros, nec suscipit ligula sapien ut magna. Vestibulum semper aliquam elementum.",
-            "Quisque nisi libero, vestibulum sit amet consequat at, vulputate ac nisl. Suspendisse aliquet felis in mi ornare ultrices. Aenean semper nunc ut nunc dignissim, et congue ante elementum. Vivamus et nunc id ligula laoreet rutrum. Proin imperdiet quis nisl eget feugiat. Cras vestibulum sit amet metus vel egestas. Etiam pulvinar, velit sit amet aliquet fermentum, eros felis fringilla ex, vel tincidunt nunc magna eget nunc. Quisque eget dui suscipit, porttitor nunc vel, dignissim erat. Quisque egestas velit in sem hendrerit, non suscipit purus ultrices. Nulla eget gravida mauris. Aenean odio nisl, faucibus id dictum sed, pulvinar id odio. Maecenas vehicula augue urna, quis tristique metus interdum et. Nunc pharetra, orci at maximus rhoncus, ex odio iaculis nunc, vel rhoncus eros nulla a quam.",
-            "Nulla faucibus commodo ultrices. Integer in sapien enim. Fusce feugiat ante non dolor aliquam faucibus. Sed maximus enim erat, eget cursus ipsum mollis vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor feugiat orci vitae gravida. Sed pharetra felis ac quam hendrerit, et imperdiet odio pretium. Quisque sodales ante eget magna finibus feugiat. Aenean eu lobortis elit, quis tempus lectus. Nunc aliquam sollicitudin sem, ac rutrum eros lobortis ultrices. Vivamus magna diam, efficitur at porta sit amet, elementum sit amet est. Donec leo neque, maximus ac suscipit ac, commodo in enim. Donec ac tincidunt ex. Integer felis neque, bibendum eget ex ac, aliquam suscipit ipsum. Maecenas bibendum hendrerit est, ut maximus nulla eleifend quis.",
-            "In hac habitasse platea dictumst. Nam ut urna ut massa volutpat lacinia posuere ut ex. Donec venenatis tincidunt dui, quis dictum turpis semper ullamcorper. Nullam leo eros, finibus posuere tristique at, fermentum in lacus. Maecenas porttitor magna sed nulla eleifend, id sagittis quam egestas. Maecenas eu massa sed dui blandit dapibus. Aenean hendrerit interdum lectus sit amet dapibus. Phasellus ac condimentum mi. Quisque ac nunc imperdiet, laoreet metus at, aliquet augue. Vestibulum ullamcorper commodo ex in lacinia. Sed aliquet pretium dui, nec facilisis odio tempus vitae."
-        ]
-    }
-];
-//# sourceMappingURL=mock-articles.js.map
-
-/***/ }),
-
-/***/ 460:
+/***/ 468:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -750,10 +931,10 @@ var NavBurgerComponent = (function () {
         this.clicked = !this.clicked;
     };
     NavBurgerComponent = __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* Component */])({
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Component */])({
             selector: 'app-nav-burger',
-            template: __webpack_require__(531),
-            styles: [__webpack_require__(522)]
+            template: __webpack_require__(543),
+            styles: [__webpack_require__(533)]
         }), 
         __metadata('design:paramtypes', [])
     ], NavBurgerComponent);
@@ -763,7 +944,7 @@ var NavBurgerComponent = (function () {
 
 /***/ }),
 
-/***/ 461:
+/***/ 469:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -779,10 +960,10 @@ var environment = {
 
 /***/ }),
 
-/***/ 515:
+/***/ 525:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(27)();
+exports = module.exports = __webpack_require__(19)();
 // imports
 
 
@@ -797,10 +978,10 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 516:
+/***/ 526:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(27)();
+exports = module.exports = __webpack_require__(19)();
 // imports
 
 
@@ -815,10 +996,10 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 517:
+/***/ 527:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(27)();
+exports = module.exports = __webpack_require__(19)();
 // imports
 
 
@@ -833,10 +1014,28 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 518:
+/***/ 528:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(27)();
+exports = module.exports = __webpack_require__(19)();
+// imports
+
+
+// module
+exports.push([module.i, ".search-input {\n  width: 90px;\n  color: white;\n  -webkit-box-ordinal-group: NaN;\n      -ms-flex-order: none;\n          order: none;\n  border: none;\n  outline: none;\n  padding: 10px;\n  margin: 0;\n  text-align: right;\n  background-color: rgba(100, 100, 100, 0.0);\n  font: 20px 'Helvetica', sans-serif;\n  -webkit-transition: width 0.3s, border-bottom, 0.5s;\n  transition: width 0.3s, border-bottom, 0.5s;\n  -webkit-transition-timing-function: ease-in;\n          transition-timing-function: ease-in;\n}\n\n.search-input:focus {\n  width: 500px;\n  background-color: rgba(100, 100, 100, 0.3);\n}\n\n::-webkit-input-placeholder { /* Chrome */\n  color: white;\n}\n\n.search-result{\n  border-bottom: 1px solid gray;\n  border-left: 1px solid gray;\n  border-right: 1px solid gray;\n  width:195px;\n  height: 16px;\n  padding: 5px;\n  background-color: white;\n  cursor: pointer;\n}\n.search-result:hover {\n  color: #eee;\n  background-color: #607D8B;\n}\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ 529:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(19)();
 // imports
 
 
@@ -851,10 +1050,10 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 519:
+/***/ 530:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(27)();
+exports = module.exports = __webpack_require__(19)();
 // imports
 
 
@@ -869,10 +1068,10 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 520:
+/***/ 531:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(27)();
+exports = module.exports = __webpack_require__(19)();
 // imports
 
 
@@ -887,10 +1086,10 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 521:
+/***/ 532:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(27)();
+exports = module.exports = __webpack_require__(19)();
 // imports
 
 
@@ -905,15 +1104,15 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 522:
+/***/ 533:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(27)();
+exports = module.exports = __webpack_require__(19)();
 // imports
 
 
 // module
-exports.push([module.i, ".menu-button {\n  font: 20px 'Helvetica', sans-serif;\n  z-index: 10;\n  position: absolute;\n  right: 70px;\n  top: 60px;\n  color: white;\n  background-color: transparent;\n  border: none;\n  outline: none;\n}\n\n.search-input {\n  width: 90px;\n  color: white;\n  -webkit-box-ordinal-group: NaN;\n      -ms-flex-order: none;\n          order: none;\n  border: none;\n  outline: none;\n  padding: 10px;\n  margin: 0;\n  text-align: right;\n  background-color: rgba(100, 100, 100, 0.0);\n  font: 20px 'Helvetica', sans-serif;\n  -webkit-transition: width 0.3s, border-bottom, 0.5s;\n  transition: width 0.3s, border-bottom, 0.5s;\n  -webkit-transition-timing-function: ease-in;\n          transition-timing-function: ease-in;\n}\n\n.search-input:focus {\n  width: 500px;\n  background-color: rgba(100, 100, 100, 0.3);\n}\n\n::-webkit-input-placeholder { /* Chrome */\n  color: white;\n}\n\n.navigation {\n  z-index: 10;\n  position: absolute;\n  right: 70px;\n  top: 90px;\n  color: white;\n}\n\n.navigation ul {\n  list-style-type: none;\n}\n\n.navigation li {\n  text-align: right;\n  margin-top: 8vh;\n  font: 20px 'Helvetica', sans-serif;\n}\n\n@media only screen and (max-width : 425px) {\n  button {\n    display: none;\n    visibility: hidden;\n    opacity: 0;\n  }\n\n}\n", ""]);
+exports.push([module.i, ".menu-button {\n  font: 20px 'Helvetica', sans-serif;\n  z-index: 10;\n  position: absolute;\n  right: 70px;\n  top: 60px;\n  color: white;\n  background-color: transparent;\n  border: none;\n  outline: none;\n}\n\n.navigation {\n  z-index: 10;\n  position: absolute;\n  right: 70px;\n  top: 90px;\n  color: white;\n}\n\n.navigation ul {\n  list-style-type: none;\n}\n\n.navigation li {\n  text-align: right;\n  margin-top: 8vh;\n  font: 20px 'Helvetica', sans-serif;\n}\n\n@media only screen and (max-width : 425px) {\n  button {\n    display: none;\n    visibility: hidden;\n    opacity: 0;\n  }\n}\n", ""]);
 
 // exports
 
@@ -923,69 +1122,76 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 524:
+/***/ 535:
 /***/ (function(module, exports) {
 
 module.exports = "<app-nav-burger></app-nav-burger>\n<router-outlet></router-outlet>\n"
 
 /***/ }),
 
-/***/ 525:
+/***/ 536:
 /***/ (function(module, exports) {
 
 module.exports = "<ul>\n  <li *ngFor = \"let article of articles\" [routerLink]=\"['/article', article.id]\">\n    <div class=\"article-card-container\">\n      <h1>{{article.title}}</h1>\n      <h2>{{article.author}}</h2>\n      <h3>Published On: {{article.dateCreated}}</h3>\n    </div>\n  </li>\n</ul>\n"
 
 /***/ }),
 
-/***/ 526:
+/***/ 537:
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"article\" *ngIf=\"articles\">\n  <h1>image goes here!</h1>\n  <h1>{{articles.title}}</h1>\n  <h3>{{articles.tagline}}</h3>\n  <h5>Author: {{articles.author}}</h5>\n  <h5> Published On: {{articles.dateCreated}}</h5>\n\n  <p *ngFor=\"let paragraph of articles.article\">\n    {{paragraph}}\n  </p>\n\n  <button class=\"back-button\" (click)=\"goBack()\">Back</button>\n</div>\n"
 
 /***/ }),
 
-/***/ 527:
+/***/ 538:
+/***/ (function(module, exports) {
+
+module.exports = "<div id=\"search-component\">\n  <input #searchBox id=\"search-box\" (keyup)=\"search(searchBox.value)\" class=\"search-input\" placeholder=\"Search\"/>\n</div>\n<div *ngFor=\"let article of articles | async\"\n  [routerLink]=\"['/article', article.id]\"\n  class=\"search-results\">\n  {{article.title}}\n</div>\n"
+
+/***/ }),
+
+/***/ 539:
 /***/ (function(module, exports) {
 
 module.exports = "<app-hero></app-hero>\n<app-article-card></app-article-card>\n"
 
 /***/ }),
 
-/***/ 528:
+/***/ 540:
 /***/ (function(module, exports) {
 
 module.exports = "<p>\n  <button>Click here</button>\n</p>\n"
 
 /***/ }),
 
-/***/ 529:
+/***/ 541:
 /***/ (function(module, exports) {
 
 module.exports = "\n<div class=\"outsideContainer\">\n  <div class=\"imgContainer\">\n    <img [src]=\"fullImagePath\">\n  </div>\n  <p>acid.</p>\n</div>\n"
 
 /***/ }),
 
-/***/ 530:
+/***/ 542:
 /***/ (function(module, exports) {
 
 module.exports = "<p>\n  <input type=\"text\">\n</p>\n"
 
 /***/ }),
 
-/***/ 531:
+/***/ 543:
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <button class=\"nav-burger\">+</button> -->\n<button (click)=\"buttonClicked()\" class='menu-button'>\n  MENU\n</button>\n<div *ngIf=\"clicked\" class=\"navigation\">\n  <ul>\n    <li>About Us</li>\n    <li>Contact Us</li>\n    <li>Read</li>\n    <li>\n      <input type='text' class=\"search-input\" placeholder=\"Search\"/>\n    </li>\n  </ul>\n</div>\n"
+module.exports = "<!-- <button class=\"nav-burger\">+</button> -->\n<button (click)=\"buttonClicked()\" class='menu-button'>\n  MENU\n</button>\n<div *ngIf=\"clicked\" class=\"navigation\">\n  <ul>\n    <li>About Us</li>\n    <li>Contact Us</li>\n    <li>Read</li>\n    <li>\n      <article-search></article-search>\n    </li>\n  </ul>\n</div>\n"
 
 /***/ }),
 
-/***/ 551:
+/***/ 575:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(334);
+module.exports = __webpack_require__(341);
 
 
 /***/ })
 
-},[551]);
+},[575]);
 //# sourceMappingURL=main.bundle.js.map
