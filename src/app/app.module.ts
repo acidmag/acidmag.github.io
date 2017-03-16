@@ -6,6 +6,11 @@ import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule }     from './app-routing.module';
 
+// Imports for loading & configuring the in-memory web api
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService }  from './in-memory-data.service';
+
+
 import { AppComponent } from './app.component';
 import { ButtonComponent } from './button/button.component';
 import { InputBarComponent } from './input-bar/input-bar.component';
@@ -15,6 +20,8 @@ import { ArticlePageComponent } from './article-page/article-page.component';
 import { ArticlesComponent } from './articles/articles.component';
 import { ArticleService }          from './article.service';
 import { NavBurgerComponent } from './nav-burger/nav-burger.component';
+import { ArticleSearchComponent } from './article-search/article-search.component';
+
 
 
 @NgModule({
@@ -22,6 +29,7 @@ import { NavBurgerComponent } from './nav-burger/nav-burger.component';
     BrowserModule,
     FormsModule,
     HttpModule,
+    InMemoryWebApiModule.forRoot(InMemoryDataService),
     AppRoutingModule
   ],
 
@@ -33,10 +41,11 @@ import { NavBurgerComponent } from './nav-burger/nav-burger.component';
     ArticleCardComponent,
     ArticlePageComponent,
     ArticlesComponent,
-    NavBurgerComponent
+    NavBurgerComponent,
+    ArticleSearchComponent
   ],
 
-  providers: [ ArticleService ],
+  providers: [ ArticleService],
   bootstrap: [ AppComponent ]
 })
 
