@@ -1,8 +1,13 @@
 .article-card-container {
-  background-color: grey;
   padding: 30px;
-  margin: 1px;
-  height: 300px;
+  height: 23.3vh;
+  background-position: center;
+  background-size: 100%;
+  transition: background-size .3s;
+}
+
+.article-card-container:hover {
+  background-size: 110%;
 }
 
 h1, h2, h3 {
@@ -11,7 +16,12 @@ h1, h2, h3 {
 
 li {
   display: inline-block;
-  width: 50%;
+  width: 47.3vw;
+  margin: 0 15px 30px;
+}
+
+li:nth-child(odd) {
+  margin-left: 30px;
 }
 
 @media only screen and (max-width : 425px) {
