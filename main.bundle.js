@@ -625,7 +625,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var HeroComponent = (function () {
     function HeroComponent() {
-        this.fullImagePath = '/assets/images/acid2.png';
+        this.fullImagePath = '/assets/images/acid2.jpg';
     }
     HeroComponent.prototype.ngOnInit = function () {
     };
