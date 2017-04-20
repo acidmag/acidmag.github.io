@@ -59,7 +59,7 @@ li:nth-child(odd) {
     background-size: 130%;
     padding: 10px;
     margin: 2px;
-    height: 30vh;
+    height: 28vh;
   }
 
   .article-card-container:hover {
