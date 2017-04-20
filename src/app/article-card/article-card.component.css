@@ -1,8 +1,13 @@
 .article-card-container {
-  background-color: grey;
   padding: 30px;
-  /*margin: 0 10px 10px;*/
   height: 23.3vh;
+  background-position: center;
+  background-size: 100%;
+  transition: background-size .3s;
+}
+
+.article-card-container:hover {
+  background-size: 110%;
 }
 
 h1, h2, h3 {

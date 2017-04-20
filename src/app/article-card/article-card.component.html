@@ -1,6 +1,6 @@
 <ul>
   <li *ngFor = "let article of articles" [routerLink]="['/article', article.id]">
-    <div class="article-card-container">
+    <div class="article-card-container" [ngStyle]="{'background-image': 'url(' + article.img + ')'}">
       <h1>{{article.title}}</h1>
       <h2>{{article.author}}</h2>
       <h3>Published On: {{article.dateCreated}}</h3>

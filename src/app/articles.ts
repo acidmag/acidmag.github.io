@@ -4,5 +4,6 @@ export class Articles {
   author: string;
   tagline: string;
   dateCreated: string;
+  img: string;
   article: string[];
 }
