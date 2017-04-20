@@ -1099,7 +1099,7 @@ module.exports = "<ul>\n  <li *ngFor = \"let article of articles\" [routerLink]=
 /***/ 537:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"article\" *ngIf=\"articles\">\n  <h1>image goes here!</h1>\n  <h1>{{articles.title}}</h1>\n  <h3>{{articles.tagline}}</h3>\n  <h5>Author: {{articles.author}}</h5>\n  <h5> Published On: {{articles.dateCreated}}</h5>\n\n  <p *ngFor=\"let paragraph of articles.article\">\n    {{paragraph}}\n  </p>\n\n  <button class=\"back-button\" (click)=\"goBack()\">Back</button>\n</div>\n"
+module.exports = "<div class=\"article\" *ngIf=\"articles\">\n  <img [src]=\"articles.img\">\n  <h1>{{articles.title}}</h1>\n  <h3>{{articles.tagline}}</h3>\n  <h5>Author: {{articles.author}}</h5>\n  <h5> Published On: {{articles.dateCreated}}</h5>\n\n  <p *ngFor=\"let paragraph of articles.article\">\n    {{paragraph}}\n  </p>\n\n  <button class=\"back-button\" (click)=\"goBack()\">Back</button>\n</div>\n"
 
 /***/ }),
 
