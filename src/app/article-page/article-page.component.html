@@ -1,5 +1,5 @@
 <div class="article" *ngIf="articles">
-  <h1>image goes here!</h1>
+  <img [src]="articles.img">
   <h1>{{articles.title}}</h1>
   <h3>{{articles.tagline}}</h3>
   <h5>Author: {{articles.author}}</h5>
