@@ -29,7 +29,7 @@ import { ArticleSearchComponent } from './article-search/article-search.componen
     BrowserModule,
     FormsModule,
     HttpModule,
-    InMemoryWebApiModule.forRoot(InMemoryDataService),
+    InMemoryWebApiModule.forRoot(InMemoryDataService, { delay: 0 }),
     AppRoutingModule
   ],
 

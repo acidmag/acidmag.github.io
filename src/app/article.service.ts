@@ -34,7 +34,7 @@ export class ArticleService {
   getArticlesSlowly(): Promise<Articles[]> {
     return new Promise(resolve => {
       // Simulate server latency with 2 second delay
-      setTimeout(() => resolve(this.getArticles()), 2000);
+      setTimeout(() => resolve(this.getArticles()), 500);
     });
   }
 
