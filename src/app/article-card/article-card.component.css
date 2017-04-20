@@ -17,23 +17,53 @@ h1, h2, h3 {
 li {
   display: inline-block;
   width: 47.3vw;
-  margin: 0 15px 30px;
+  padding: 0 0 30px 30px;
 }
 
 li:nth-child(odd) {
-  margin-left: 30px;
+  padding-left: 30px;
+}
+
+@media only screen and (max-width : 1440px) {
+  li {
+    width: 46.8vw;
+  }
+
+  .article-card-container {
+    height: 22vh;
+  }
+}
+
+@media only screen and (max-width : 1024px) {
+  li {
+    width: 45.9vw;
+    padding: 0 0 25px 25px;
+  }
+
+  .article-card-container {
+    height: 22vh;
+  }
 }
 
 @media only screen and (max-width : 425px) {
   li {
-    width: 100%;
+    padding: 0 4vw 4vw;
+    width: 93vw;
+  }
+
+  li:nth-child(odd) {
+    padding: 0 4vw 4vw;
   }
 
   .article-card-container {
-    background-color: grey;
+    background-size: 130%;
     padding: 10px;
     margin: 2px;
     height: 30vh;
+  }
+
+  .article-card-container:hover {
+    background-size: 130%;
   }
 
 }
