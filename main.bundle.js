@@ -655,7 +655,7 @@ var InMemoryDataService = (function () {
         var articles = [
             {
                 id: 1,
-                title: "Article 1",
+                title: "Article 1: Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                 author: "Author 1",
                 tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                 dateCreated: "03/02/2017",
@@ -964,7 +964,7 @@ exports = module.exports = __webpack_require__(19)();
 
 
 // module
-exports.push([module.i, ".article {\n    width: 50%;\n    margin: 0 auto;\n}\n\n.back-button {\n  background-color: grey;\n  margin: 20px 0;\n  padding: 10px 20px;\n  border: none;\n  width: 100px;\n  color: white;\n  font-size: 16px;\n}\np {\n  margin: 30px 0;\n  line-height: 5vh;\n}\n\n@media only screen and (max-width : 425px) {\n  .article {\n      width: 90vw;\n      margin: 0 auto;\n  }\n\n\n}\n", ""]);
+exports.push([module.i, ".article {\n    width: 50%;\n    margin: 0 auto;\n}\n\n.back-button {\n  background-color: grey;\n  margin: 20px 0;\n  padding: 10px 20px;\n  border: none;\n  width: 100px;\n  color: white;\n  font-size: 16px;\n}\n\np {\n  margin: 30px 0;\n  line-height: 5vh;\n}\n\n.image-container {\n  width: 100vw;\n  height: 50vh;\n  background-position: center;\n  background-size: 100%;\n}\n\n.article-info {\n  color: white;\n  margin: 0 auto;\n  padding-top: 20vh;\n  width: 50%;\n}\n\n.article-info h1, h3, h5 {\n  padding-bottom: 15px;\n}\n\n.article-info h1 {\n  font-size: 5vh;\n}\n\n@media only screen and (max-width : 425px) {\n  .article {\n      width: 90vw;\n      margin: 0 auto;\n  }\n\n  .image-container {\n    width: 100vw;\n    height: 30vh;\n    background-size: 110%;\n  }\n\n  .article-info {\n    padding-top: 5vh;\n    width: 90vw;\n  }\n\n  .article-info h1, h3, h5 {\n    padding-bottom: 5px;\n  }\n\n  .article-info h1 {\n    font-size: 3vh;\n  }\n\n}\n", ""]);
 
 // exports
 
@@ -1099,7 +1099,7 @@ module.exports = "<ul>\n  <li *ngFor = \"let article of articles\" [routerLink]=
 /***/ 537:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"article\" *ngIf=\"articles\">\n  <img [src]=\"articles.img\">\n  <h1>{{articles.title}}</h1>\n  <h3>{{articles.tagline}}</h3>\n  <h5>Author: {{articles.author}}</h5>\n  <h5> Published On: {{articles.dateCreated}}</h5>\n\n  <p *ngFor=\"let paragraph of articles.article\">\n    {{paragraph}}\n  </p>\n\n  <button class=\"back-button\" (click)=\"goBack()\">Back</button>\n</div>\n"
+module.exports = "<div *ngIf=\"articles\">\n  <div class=\"image-container\" [ngStyle]=\"{'background-image': 'url(' + articles.img + ')'}\">\n    <div class=\"article-info\">\n      <h1>{{articles.title}}</h1>\n      <h3>{{articles.tagline}}</h3>\n      <h5>Author: {{articles.author}}</h5>\n      <h5> Published On: {{articles.dateCreated}}</h5>\n    </div>\n  </div>\n  <div class=\"article\">\n    <p *ngFor=\"let paragraph of articles.article\">\n    {{paragraph}}\n    </p>\n    <button class=\"back-button\" (click)=\"goBack()\">Back</button>\n  </div>\n</div>\n"
 
 /***/ }),
 
