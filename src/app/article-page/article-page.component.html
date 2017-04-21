@@ -1,13 +1,16 @@
-<div class="article" *ngIf="articles">
-  <img [src]="articles.img">
-  <h1>{{articles.title}}</h1>
-  <h3>{{articles.tagline}}</h3>
-  <h5>Author: {{articles.author}}</h5>
-  <h5> Published On: {{articles.dateCreated}}</h5>
-
-  <p *ngFor="let paragraph of articles.article">
+<div *ngIf="articles">
+  <div class="image-container" [ngStyle]="{'background-image': 'url(' + articles.img + ')'}">
+    <div class="article-info">
+      <h1>{{articles.title}}</h1>
+      <h3>{{articles.tagline}}</h3>
+      <h5>Author: {{articles.author}}</h5>
+      <h5> Published On: {{articles.dateCreated}}</h5>
+    </div>
+  </div>
+  <div class="article">
+    <p *ngFor="let paragraph of articles.article">
     {{paragraph}}
-  </p>
-
-  <button class="back-button" (click)="goBack()">Back</button>
+    </p>
+    <button class="back-button" (click)="goBack()">Back</button>
+  </div>
 </div>

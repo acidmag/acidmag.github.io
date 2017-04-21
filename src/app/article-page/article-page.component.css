@@ -12,9 +12,32 @@
   color: white;
   font-size: 16px;
 }
+
 p {
   margin: 30px 0;
   line-height: 5vh;
+}
+
+.image-container {
+  width: 100vw;
+  height: 50vh;
+  background-position: center;
+  background-size: 100%;
+}
+
+.article-info {
+  color: white;
+  margin: 0 auto;
+  padding-top: 20vh;
+  width: 50%;
+}
+
+.article-info h1, h3, h5 {
+  padding-bottom: 15px;
+}
+
+.article-info h1 {
+  font-size: 5vh;
 }
 
 @media only screen and (max-width : 425px) {
@@ -23,5 +46,23 @@ p {
       margin: 0 auto;
   }
 
+  .image-container {
+    width: 100vw;
+    height: 30vh;
+    background-size: 110%;
+  }
+
+  .article-info {
+    padding-top: 5vh;
+    width: 90vw;
+  }
+
+  .article-info h1, h3, h5 {
+    padding-bottom: 5px;
+  }
+
+  .article-info h1 {
+    font-size: 3vh;
+  }
 
 }

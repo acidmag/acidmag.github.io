@@ -3,7 +3,7 @@ import { Articles } from './articles';
 export var ARTICLES: Articles[] = [
   {
     id: 1,
-    title: "Article 1",
+    title: "Article 1: Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     author: "Author 1",
     tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     dateCreated: "03/02/2017",
