@@ -18,7 +18,7 @@ export class InMemoryDataService implements InMemoryDbService {
         },
         {
           id: 2,
-          title: "Article 2",
+          title: "Article 2: Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
           author: "Author 2",
           tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
           dateCreated: "03/02/2017",
