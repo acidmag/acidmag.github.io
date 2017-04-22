@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ArticleCardComponent } from './article-card/article-card.component';
 import { ArticlePageComponent } from './article-page/article-page.component';
-import { ArticlesComponent } from './articles/articles.component';
+import { ArticlesComponent }    from './articles/articles.component';
 
 const routes: Routes = [
   { path: '', component: ArticlesComponent },
