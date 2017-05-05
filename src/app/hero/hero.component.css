@@ -8,9 +8,26 @@
   box-sizing: border-box;
 }
 
-img {
-  max-width: none;
-  height: 100vh;
+#background-image {
+  z-index: -1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+
+.imgContainer {
+  z-index: 2;
+  width: 75vw;
+  height: auto;
+  margin: 18.5vh auto;
+
+}
+
+#banner-image {
+  /*max-width: none;*/
+  height: 100%;
   width: 100%;
   padding: 30px;
 }

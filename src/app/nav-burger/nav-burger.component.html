@@ -1,14 +1,8 @@
-<!-- <button class="nav-burger">+</button> -->
-<button (click)="buttonClicked()" class='menu-button'>
-  MENU
-</button>
-<div *ngIf="clicked" class="navigation">
-  <ul>
-    <li>About Us</li>
-    <li>Contact Us</li>
-    <li>Read</li>
-    <li>
-      <app-article-search></app-article-search>
-    </li>
-  </ul>
+<div class="navigation-container">
+    <ul>
+      <li [routerLink]="['/']" >read</li>
+      <li [routerLink]="['/']">submit</li>
+      <li [routerLink]="['/']">the trip?</li>
+    </ul>
+  <app-article-search></app-article-search>
 </div>
