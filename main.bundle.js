@@ -259,7 +259,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var routes = [
     { path: '', component: __WEBPACK_IMPORTED_MODULE_3__articles_articles_component__["a" /* ArticlesComponent */] },
     { path: 'articles', component: __WEBPACK_IMPORTED_MODULE_3__articles_articles_component__["a" /* ArticlesComponent */] },
-    { path: 'article/:id', component: __WEBPACK_IMPORTED_MODULE_2__article_page_article_page_component__["a" /* ArticlePageComponent */] }
+    { path: 'article/:id', component: __WEBPACK_IMPORTED_MODULE_2__article_page_article_page_component__["a" /* ArticlePageComponent */] },
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {
@@ -625,7 +625,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var HeroComponent = (function () {
     function HeroComponent() {
-        this.fullImagePath = '/assets/images/acid2.jpg';
+        this.bannerImagePath = '/assets/images/Homepage_Acid collage.png';
+        this.backgroundImagePath = '/assets/images/Homepage_Glitch effect.png';
+        this.logoImagePath = '/assets/images/Homepage_Logo.png';
     }
     HeroComponent.prototype.ngOnInit = function () {
     };
@@ -928,7 +930,7 @@ exports = module.exports = __webpack_require__(19)();
 
 
 // module
-exports.push([module.i, "* {\n  margin: 0;\n  padding: 0;\n}\n", ""]);
+exports.push([module.i, "* {\n  margin: 0;\n  padding: 0;\n  font: 16px, \"Courier\", sans-serif;\n}\n", ""]);
 
 // exports
 
@@ -946,7 +948,7 @@ exports = module.exports = __webpack_require__(19)();
 
 
 // module
-exports.push([module.i, ".article-card-container {\n  padding: 30px;\n  height: 23.3vh;\n  background-position: center;\n  background-size: 100%;\n  -webkit-transition: background-size .3s;\n  transition: background-size .3s;\n}\n\n.article-card-container:hover {\n  background-size: 110%;\n}\n\nh1, h2, h3 {\n  color: white;\n}\n\nli {\n  display: inline-block;\n  width: 47.3vw;\n  padding: 0 0 30px 30px;\n}\n\nli:nth-child(odd) {\n  padding-left: 30px;\n}\n\n@media only screen and (max-width : 1440px) {\n  li {\n    width: 46.8vw;\n  }\n\n  .article-card-container {\n    height: 22vh;\n  }\n}\n\n@media only screen and (max-width : 1024px) {\n  li {\n    width: 45.9vw;\n    padding: 0 0 25px 25px;\n  }\n\n  .article-card-container {\n    height: 22vh;\n  }\n}\n\n@media only screen and (max-width : 425px) {\n  li {\n    padding: 0 4vw 4vw;\n    width: 93vw;\n  }\n\n  li:nth-child(odd) {\n    padding: 0 4vw 4vw;\n  }\n\n  .article-card-container {\n    background-size: 130%;\n    padding: 10px;\n    margin: 2px;\n    height: 28vh;\n  }\n\n  .article-card-container:hover {\n    background-size: 130%;\n  }\n\n}\n", ""]);
+exports.push([module.i, ".article-card-container {\n  padding: 30px;\n  height: 37vh;\n  background-position: center;\n  background-size: 120%;\n  transition: background-size .3s;\n\n}\n\n.article-card-container:hover {\n  background-size: 130%;\n}\n\nh1, h2, h3 {\n  color: white;\n  font: 30px \"Courier\", sans-serif;\n  text-shadow: 1px 1px 10px black;\n}\n\nh1 {\n  padding-bottom: 40px;\n}\n\n.article-cards-container {\n  text-align: center;\n}\n\nul {\n  /*margin: 0 auto;*/\n}\n\nli {\n  display: inline-block;\n  width: 40vw;\n  padding: 0 0 50px 50px;\n  text-align: left;\n\n}\n\n@media only screen and (max-width : 1440px) {\n  li {\n    width: 46.8vw;\n  }\n\n  .article-card-container {\n    height: 22vh;\n  }\n}\n\n@media only screen and (max-width : 1024px) {\n  li {\n    width: 45.9vw;\n    padding: 0 0 25px 25px;\n  }\n\n  .article-card-container {\n    height: 22vh;\n  }\n}\n\n@media only screen and (max-width : 425px) {\n  li {\n    padding: 0 4vw 4vw;\n    width: 93vw;\n  }\n\n  li:nth-child(odd) {\n    padding: 0 4vw 4vw;\n  }\n\n  .article-card-container {\n    background-size: 130%;\n    padding: 10px;\n    margin: 2px;\n    height: 28vh;\n  }\n\n  .article-card-container:hover {\n    background-size: 130%;\n  }\n\n}\n", ""]);
 
 // exports
 
@@ -982,7 +984,7 @@ exports = module.exports = __webpack_require__(19)();
 
 
 // module
-exports.push([module.i, ".search-input {\n  width: 90px;\n  color: white;\n  -webkit-box-ordinal-group: NaN;\n      -ms-flex-order: none;\n          order: none;\n  border: none;\n  outline: none;\n  padding: 10px;\n  margin: 0;\n  text-align: right;\n  background-color: rgba(100, 100, 100, 0.0);\n  font: 20px 'Helvetica', sans-serif;\n  -webkit-transition: width 0.3s, border-bottom, 0.5s;\n  transition: width 0.3s, border-bottom, 0.5s;\n  -webkit-transition-timing-function: ease-in;\n          transition-timing-function: ease-in;\n}\n\n.search-input:focus {\n  width: 500px;\n  background-color: rgba(100, 100, 100, 0.3);\n}\n\n::-webkit-input-placeholder { /* Chrome */\n  color: white;\n}\n\n\n.search-results{\n  color: white;\n  padding: 10px;\n  margin-top: 4vh;\n  font: 20px 'Helvetica', sans-serif;\n}\n\n.search-results:hover {\n  cursor: pointer;\n}\n\n", ""]);
+exports.push([module.i, ".search-input {\n  width: 300px;\n  color: blue;\n  -webkit-box-ordinal-group: none;\n      -ms-flex-order: none;\n          order: none;\n  border: none;\n  outline: none;\n  padding: 10px;\n  text-align: right;\n  font: 40px 'Helvetica', sans-serif;\n  background-color: transparent;\n}\n\n::-webkit-input-placeholder { /* Chrome */\n  color: blue;\n}\n\n.search-results {\n  color: blue;\n  font: 40px 'Helvetica', sans-serif;\n  margin-bottom: 4vh;\n}\n\n.search-results:hover {\n  cursor: pointer;\n}\n", ""]);
 
 // exports
 
@@ -1036,7 +1038,7 @@ exports = module.exports = __webpack_require__(19)();
 
 
 // module
-exports.push([module.i, "@font-face {\n  font-family: danielFont;\n  src: url('/assets/daniel.ttf');\n\n}\n\n*{\n  box-sizing: border-box;\n}\n\nimg {\n  max-width: none;\n  height: 100vh;\n  width: 100%;\n  padding: 30px;\n}\n\n  p {\n  padding: 0;\n  margin: 0;\n  position: absolute;\n  bottom: 0;\n  left: 100px;\n  font: 10vw danielFont;\n  color: white;\n}\n\n@media only screen and (max-width : 425px) {\n  .imgContainer {\n    overflow: scroll;\n    padding: 0;\n    margin: 0;\n  }\n  .outsideContainer{\n    height: auto;\n    width: 100vw;\n    padding: 4%;\n  }\n\n  img {\n    max-width: none;\n    height: 95vh;\n    width: auto;\n    padding: 0;\n\n  }\n\n  p {\n    position: absolute;\n    bottom: 10px;\n    left: 30px;\n    font: 10vw danielFont;\n    color: white;\n\n  }\n\n}\n", ""]);
+exports.push([module.i, "@font-face {\n  font-family: danielFont;\n  src: url('/assets/daniel.ttf');\n\n}\n\n*{\n  box-sizing: border-box;\n}\n\n#background-image {\n  z-index: -1;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: auto;\n}\n\n.imgContainer {\n  z-index: 2;\n  width: 75vw;\n  height: auto;\n  margin: 18.5vh auto;\n}\n\n#logo {\n  width: 16vw;\n  height: auto;\n  z-index: 3;\n  position: absolute;\n  top: 275px;\n  left: 700px;\n}\n\n\n#banner-image {\n  height: 100%;\n  width: 100%;\n  padding: 30px;\n  -webkit-filter: brightness(50%);\n          filter: brightness(50%);\n}\n\np {\n  padding: 0;\n  margin: 0;\n  position: absolute;\n  bottom: 0;\n  left: 100px;\n  font: 10vw danielFont;\n  color: white;\n}\n\n@media only screen and (max-width : 425px) {\n  .imgContainer {\n    overflow: scroll;\n    padding: 0;\n    margin: 0;\n  }\n  .outsideContainer{\n    height: auto;\n    width: 100vw;\n    padding: 4%;\n  }\n\n  img {\n    max-width: none;\n    height: 95vh;\n    width: auto;\n    padding: 0;\n\n  }\n\n  p {\n    position: absolute;\n    bottom: 10px;\n    left: 30px;\n    font: 10vw danielFont;\n    color: white;\n\n  }\n\n}\n", ""]);
 
 // exports
 
@@ -1072,7 +1074,7 @@ exports = module.exports = __webpack_require__(19)();
 
 
 // module
-exports.push([module.i, ".menu-button {\n  font: 20px 'Helvetica', sans-serif;\n  z-index: 10;\n  position: absolute;\n  right: 70px;\n  top: 60px;\n  color: white;\n  background-color: transparent;\n  border: none;\n  outline: none;\n}\n\n.navigation {\n  z-index: 10;\n  position: absolute;\n  right: 70px;\n  top: 90px;\n  color: white;\n}\n\n.navigation ul {\n  list-style-type: none;\n}\n\n.navigation li {\n  text-align: right;\n  margin-top: 8vh;\n  font: 20px 'Helvetica', sans-serif;\n}\n\n@media only screen and (max-width : 425px) {\n  button {\n    display: none;\n    visibility: hidden;\n    opacity: 0;\n  }\n}\n", ""]);
+exports.push([module.i, ".navigation-container {\n  z-index: 10;\n  position: absolute;\n  right: 100px;\n  bottom: 0;\n  color: blue;\n  text-align: right;\n  height: auto;\n\n}\n\n.navigation-container ul {\n  list-style-type: none;\n  font: 40px 'Helvetica', sans-serif;\n  float: right;\n}\n\n.navigation-container li {\n  text-align: left;\n  margin-bottom: 5vh;\n  display: block;\n}\n\n.navigation-container li:hover {\n  cursor: pointer;\n}\n\n@media only screen and (max-width : 425px) {\n  button {\n    display: none;\n    visibility: hidden;\n    opacity: 0;\n  }\n}\n", ""]);
 
 // exports
 
@@ -1085,14 +1087,14 @@ module.exports = module.exports.toString();
 /***/ 535:
 /***/ (function(module, exports) {
 
-module.exports = "<app-nav-burger></app-nav-burger>\n<router-outlet></router-outlet>\n"
+module.exports = "<router-outlet></router-outlet>\n"
 
 /***/ }),
 
 /***/ 536:
 /***/ (function(module, exports) {
 
-module.exports = "<ul>\n  <li *ngFor = \"let article of articles\" [routerLink]=\"['/article', article.id]\">\n    <div class=\"article-card-container\" [ngStyle]=\"{'background-image': 'url(' + article.img + ')'}\">\n      <h1>{{article.title}}</h1>\n      <h2>{{article.author}}</h2>\n      <h3>Published On: {{article.dateCreated}}</h3>\n    </div>\n  </li>\n</ul>\n"
+module.exports = "<div class=\"article-cards-container\">\n<ul>\n  <li *ngFor = \"let article of articles\" [routerLink]=\"['/article', article.id]\">\n    <div class=\"article-card-container\" [ngStyle]=\"{'background-image': 'url(' + article.img + ')'}\">\n      <h1>{{article.title}}</h1>\n      <h2>{{article.author}}</h2>\n      <h3>Published On: {{article.dateCreated}}</h3>\n    </div>\n  </li>\n</ul>\n"
 
 /***/ }),
 
@@ -1106,7 +1108,7 @@ module.exports = "<div *ngIf=\"articles\">\n  <div class=\"image-container\" [ng
 /***/ 538:
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"search-component\">\n  <input #searchBox id=\"search-box\" (keyup)=\"search(searchBox.value)\" class=\"search-input\" placeholder=\"Search\">\n</div>\n\n<div *ngFor=\"let article of articles | async let i=index\"\n  [routerLink]=\"['/article', article.id]\"\n  class=\"search-results\">\n  <template [ngIf]= \"i < 4\">\n    {{article.title}}\n  </template>\n</div>\n"
+module.exports = "<div id=\"search-component\">\n  <input #searchBox id=\"search-box\" (keyup)=\"search(searchBox.value)\" class=\"search-input\" placeholder=\"search\">\n</div>\n\n<div *ngFor=\"let article of articles | async let i=index\"\n  [routerLink]=\"['/article', article.id]\"\n  class=\"search-results\">\n  <template [ngIf]= \"i < 4\">\n    {{article.title}}\n  </template>\n</div>\n"
 
 /***/ }),
 
@@ -1127,7 +1129,7 @@ module.exports = "<p>\n  <button>Click here</button>\n</p>\n"
 /***/ 541:
 /***/ (function(module, exports) {
 
-module.exports = "\n<div class=\"outsideContainer\">\n  <div class=\"imgContainer\">\n    <img [src]=\"fullImagePath\">\n  </div>\n  <p>acid.</p>\n</div>\n"
+module.exports = "<app-nav-burger></app-nav-burger>\n<div class=\"outsideContainer\">\n  <img id=\"background-image\" [src]=\"backgroundImagePath\">\n  <div class=\"imgContainer\">\n    <img id=\"logo\" [src]=\"logoImagePath\">\n    <img id=\"banner-image\"[src]=\"bannerImagePath\">\n\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1141,7 +1143,7 @@ module.exports = "<p>\n  <input type=\"text\">\n</p>\n"
 /***/ 543:
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <button class=\"nav-burger\">+</button> -->\n<button (click)=\"buttonClicked()\" class='menu-button'>\n  MENU\n</button>\n<div *ngIf=\"clicked\" class=\"navigation\">\n  <ul>\n    <li>About Us</li>\n    <li>Contact Us</li>\n    <li>Read</li>\n    <li>\n      <app-article-search></app-article-search>\n    </li>\n  </ul>\n</div>\n"
+module.exports = "<div class=\"navigation-container\">\n    <ul>\n      <li [routerLink]=\"['/']\" >read</li>\n      <li [routerLink]=\"['/']\">submit</li>\n      <li [routerLink]=\"['/']\">the trip?</li>\n    </ul>\n  <app-article-search></app-article-search>\n</div>\n"
 
 /***/ }),
 
