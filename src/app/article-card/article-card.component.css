@@ -1,27 +1,40 @@
 .article-card-container {
   padding: 30px;
-  height: 23.3vh;
+  height: 37vh;
   background-position: center;
-  background-size: 100%;
+  background-size: 120%;
   transition: background-size .3s;
+
 }
 
 .article-card-container:hover {
-  background-size: 110%;
+  background-size: 130%;
 }
 
 h1, h2, h3 {
   color: white;
+  font: 30px "Courier", sans-serif;
+  text-shadow: 1px 1px 10px black;
+}
+
+h1 {
+  padding-bottom: 40px;
+}
+
+.article-cards-container {
+  text-align: center;
+}
+
+ul {
+  /*margin: 0 auto;*/
 }
 
 li {
   display: inline-block;
-  width: 47.3vw;
-  padding: 0 0 30px 30px;
-}
+  width: 40vw;
+  padding: 0 0 50px 50px;
+  text-align: left;
 
-li:nth-child(odd) {
-  padding-left: 30px;
 }
 
 @media only screen and (max-width : 1440px) {

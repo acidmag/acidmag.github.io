@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./hero.component.css']
 })
 export class HeroComponent implements OnInit {
-  fullImagePath: string;
+  bannerImagePath: string;
+  backgroundImagePath: string;
+  logoImagePath: string;
 
   constructor() {
-      this.fullImagePath = '/assets/images/acid2.jpg';
+      this.bannerImagePath = '/assets/images/Homepage_Acid collage.png';
+      this.backgroundImagePath = '/assets/images/Homepage_Glitch effect.png';
+      this.logoImagePath = '/assets/images/Homepage_Logo.png';
   }
 
   ngOnInit() {

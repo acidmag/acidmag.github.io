@@ -1,5 +1,5 @@
 <div id="search-component">
-  <input #searchBox id="search-box" (keyup)="search(searchBox.value)" class="search-input" placeholder="Search">
+  <input #searchBox id="search-box" (keyup)="search(searchBox.value)" class="search-input" placeholder="search">
 </div>
 
 <div *ngFor="let article of articles | async let i=index"

@@ -1,4 +1,4 @@
-import { NgModule }             from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { ArticleCardComponent } from './article-card/article-card.component';
@@ -8,7 +8,8 @@ import { ArticlesComponent } from './articles/articles.component';
 const routes: Routes = [
   { path: '', component: ArticlesComponent },
   { path: 'articles', component: ArticlesComponent },
-  { path: 'article/:id', component: ArticlePageComponent }
+  { path: 'article/:id', component: ArticlePageComponent },
+  // { path: 'about', component AboutComponent }
 ];
 
 @NgModule({

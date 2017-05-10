@@ -7,9 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavBurgerComponent implements OnInit {
 
-  constructor() { }
+  clicked: boolean;
 
-  clicked = false;
+  constructor() {
+    this.clicked = false;
+  }
 
   ngOnInit() {
   }

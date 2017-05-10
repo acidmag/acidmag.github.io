@@ -1,31 +1,28 @@
-.menu-button {
-  font: 20px 'Helvetica', sans-serif;
+.navigation-container {
   z-index: 10;
   position: absolute;
-  right: 70px;
-  top: 60px;
-  color: white;
-  background-color: transparent;
-  border: none;
-  outline: none;
-}
-
-.navigation {
-  z-index: 10;
-  position: absolute;
-  right: 70px;
-  top: 90px;
-  color: white;
-}
-
-.navigation ul {
-  list-style-type: none;
-}
-
-.navigation li {
+  right: 100px;
+  bottom: 0;
+  color: blue;
   text-align: right;
-  margin-top: 8vh;
-  font: 20px 'Helvetica', sans-serif;
+  height: auto;
+
+}
+
+.navigation-container ul {
+  list-style-type: none;
+  font: 40px 'Helvetica', sans-serif;
+  float: right;
+}
+
+.navigation-container li {
+  text-align: left;
+  margin-bottom: 5vh;
+  display: block;
+}
+
+.navigation-container li:hover {
+  cursor: pointer;
 }
 
 @media only screen and (max-width : 425px) {
