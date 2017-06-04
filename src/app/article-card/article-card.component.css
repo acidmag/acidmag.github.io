@@ -9,6 +9,7 @@
 
 .article-card-container:hover {
   background-size: 130%;
+  cursor: pointer;
 }
 
 h1, h2, h3 {

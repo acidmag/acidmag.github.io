@@ -8,7 +8,7 @@ import { ArticleService } from '../article.service';
 
 @Component({
 
-  selector: 'app-article-page',
+  selector: 'article-page',
   templateUrl: './article-page.component.html',
   styleUrls: ['./article-page.component.css']
 })
