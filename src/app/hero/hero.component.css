@@ -4,7 +4,7 @@
 
 }
 
-*{
+* {
   box-sizing: border-box;
 }
 
@@ -22,15 +22,18 @@
   width: 75vw;
   height: auto;
   margin: 18.5vh auto;
+  display: box;
+  display: flex;
+  box-align: center;
+  align-items: center;
+  box-pack: center;
+  justify-content: center;
 }
 
 #logo {
-  width: 16vw;
-  height: auto;
-  z-index: 3;
   position: absolute;
-  top: 275px;
-  left: 700px;
+  z-index: 3;
+  /*box-shadow: 0 0 100px black;*/
 }
 
 
@@ -38,6 +41,7 @@
   height: 100%;
   width: 100%;
   padding: 30px;
+  position: relative;
   filter: brightness(50%);
 }
 
