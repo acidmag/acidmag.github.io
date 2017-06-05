@@ -132,7 +132,7 @@ var ArticlePageComponent = (function () {
     };
     ArticlePageComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Q" /* Component */])({
-            selector: 'app-article-page',
+            selector: 'article-page',
             template: __webpack_require__(537),
             styles: [__webpack_require__(527)]
         }), 
@@ -435,7 +435,7 @@ var ArticleCardComponent = (function () {
     };
     ArticleCardComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Component */])({
-            selector: 'app-article-card',
+            selector: 'article-card',
             template: __webpack_require__(536),
             styles: [__webpack_require__(526)]
         }), 
@@ -555,7 +555,7 @@ var ArticleSearchComponent = (function () {
     };
     ArticleSearchComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Component */])({
-            selector: 'app-article-search',
+            selector: 'article-search',
             template: __webpack_require__(538),
             styles: [__webpack_require__(528)],
             providers: [__WEBPACK_IMPORTED_MODULE_2__article_search_service__["a" /* ArticleSearchService */]]
@@ -633,7 +633,7 @@ var HeroComponent = (function () {
     };
     HeroComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Component */])({
-            selector: 'app-hero',
+            selector: 'hero',
             template: __webpack_require__(541),
             styles: [__webpack_require__(531)]
         }), 
@@ -894,7 +894,7 @@ var NavBurgerComponent = (function () {
     };
     NavBurgerComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Component */])({
-            selector: 'app-nav-burger',
+            selector: 'nav-burger',
             template: __webpack_require__(543),
             styles: [__webpack_require__(533)]
         }), 
@@ -948,7 +948,7 @@ exports = module.exports = __webpack_require__(19)();
 
 
 // module
-exports.push([module.i, ".article-card-container {\n  padding: 30px;\n  height: 37vh;\n  background-position: center;\n  background-size: 120%;\n  transition: background-size .3s;\n\n}\n\n.article-card-container:hover {\n  background-size: 130%;\n}\n\nh1, h2, h3 {\n  color: white;\n  font: 30px \"Courier\", sans-serif;\n  text-shadow: 1px 1px 10px black;\n}\n\nh1 {\n  padding-bottom: 40px;\n}\n\n.article-cards-container {\n  text-align: center;\n}\n\nul {\n  /*margin: 0 auto;*/\n}\n\nli {\n  display: inline-block;\n  width: 40vw;\n  padding: 0 0 50px 50px;\n  text-align: left;\n\n}\n\n@media only screen and (max-width : 1440px) {\n  li {\n    width: 46.8vw;\n  }\n\n  .article-card-container {\n    height: 22vh;\n  }\n}\n\n@media only screen and (max-width : 1024px) {\n  li {\n    width: 45.9vw;\n    padding: 0 0 25px 25px;\n  }\n\n  .article-card-container {\n    height: 22vh;\n  }\n}\n\n@media only screen and (max-width : 425px) {\n  li {\n    padding: 0 4vw 4vw;\n    width: 93vw;\n  }\n\n  li:nth-child(odd) {\n    padding: 0 4vw 4vw;\n  }\n\n  .article-card-container {\n    background-size: 130%;\n    padding: 10px;\n    margin: 2px;\n    height: 28vh;\n  }\n\n  .article-card-container:hover {\n    background-size: 130%;\n  }\n\n}\n", ""]);
+exports.push([module.i, ".article-card-container {\n  padding: 30px;\n  height: 37vh;\n  background-position: center;\n  background-size: 120%;\n  transition: background-size .3s;\n\n}\n\n.article-card-container:hover {\n  background-size: 130%;\n  cursor: pointer;\n}\n\nh1, h2, h3 {\n  color: white;\n  font: 30px \"Courier\", sans-serif;\n  text-shadow: 1px 1px 10px black;\n}\n\nh1 {\n  padding-bottom: 40px;\n}\n\n.article-cards-container {\n  text-align: center;\n}\n\nul {\n  /*margin: 0 auto;*/\n}\n\nli {\n  display: inline-block;\n  width: 40vw;\n  padding: 0 0 50px 50px;\n  text-align: left;\n\n}\n\n@media only screen and (max-width : 1440px) {\n  li {\n    width: 46.8vw;\n  }\n\n  .article-card-container {\n    height: 22vh;\n  }\n}\n\n@media only screen and (max-width : 1024px) {\n  li {\n    width: 45.9vw;\n    padding: 0 0 25px 25px;\n  }\n\n  .article-card-container {\n    height: 22vh;\n  }\n}\n\n@media only screen and (max-width : 425px) {\n  li {\n    padding: 0 4vw 4vw;\n    width: 93vw;\n  }\n\n  li:nth-child(odd) {\n    padding: 0 4vw 4vw;\n  }\n\n  .article-card-container {\n    background-size: 130%;\n    padding: 10px;\n    margin: 2px;\n    height: 28vh;\n  }\n\n  .article-card-container:hover {\n    background-size: 130%;\n  }\n\n}\n", ""]);
 
 // exports
 
@@ -1038,7 +1038,7 @@ exports = module.exports = __webpack_require__(19)();
 
 
 // module
-exports.push([module.i, "@font-face {\n  font-family: danielFont;\n  src: url('/assets/daniel.ttf');\n\n}\n\n*{\n  box-sizing: border-box;\n}\n\n#background-image {\n  z-index: -1;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: auto;\n}\n\n.imgContainer {\n  z-index: 2;\n  width: 75vw;\n  height: auto;\n  margin: 18.5vh auto;\n}\n\n#logo {\n  width: 16vw;\n  height: auto;\n  z-index: 3;\n  position: absolute;\n  top: 275px;\n  left: 700px;\n}\n\n\n#banner-image {\n  height: 100%;\n  width: 100%;\n  padding: 30px;\n  -webkit-filter: brightness(50%);\n          filter: brightness(50%);\n}\n\np {\n  padding: 0;\n  margin: 0;\n  position: absolute;\n  bottom: 0;\n  left: 100px;\n  font: 10vw danielFont;\n  color: white;\n}\n\n@media only screen and (max-width : 425px) {\n  .imgContainer {\n    overflow: scroll;\n    padding: 0;\n    margin: 0;\n  }\n  .outsideContainer{\n    height: auto;\n    width: 100vw;\n    padding: 4%;\n  }\n\n  img {\n    max-width: none;\n    height: 95vh;\n    width: auto;\n    padding: 0;\n\n  }\n\n  p {\n    position: absolute;\n    bottom: 10px;\n    left: 30px;\n    font: 10vw danielFont;\n    color: white;\n\n  }\n\n}\n", ""]);
+exports.push([module.i, "@font-face {\n  font-family: danielFont;\n  src: url('/assets/daniel.ttf');\n\n}\n\n* {\n  box-sizing: border-box;\n}\n\n#background-image {\n  z-index: -1;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: auto;\n}\n\n.imgContainer {\n  z-index: 2;\n  width: 75vw;\n  height: auto;\n  margin: 18.5vh auto;\n  display: box;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  box-align: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  box-pack: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n\n#logo {\n  position: absolute;\n  z-index: 3;\n  /*box-shadow: 0 0 100px black;*/\n}\n\n\n#banner-image {\n  height: 100%;\n  width: 100%;\n  padding: 30px;\n  position: relative;\n  -webkit-filter: brightness(50%);\n          filter: brightness(50%);\n}\n\np {\n  padding: 0;\n  margin: 0;\n  position: absolute;\n  bottom: 0;\n  left: 100px;\n  font: 10vw danielFont;\n  color: white;\n}\n\n@media only screen and (max-width : 425px) {\n  .imgContainer {\n    overflow: scroll;\n    padding: 0;\n    margin: 0;\n  }\n  .outsideContainer{\n    height: auto;\n    width: 100vw;\n    padding: 4%;\n  }\n\n  img {\n    max-width: none;\n    height: 95vh;\n    width: auto;\n    padding: 0;\n\n  }\n\n  p {\n    position: absolute;\n    bottom: 10px;\n    left: 30px;\n    font: 10vw danielFont;\n    color: white;\n\n  }\n\n}\n", ""]);
 
 // exports
 
@@ -1115,7 +1115,7 @@ module.exports = "<div id=\"search-component\">\n  <input #searchBox id=\"search
 /***/ 539:
 /***/ (function(module, exports) {
 
-module.exports = "<app-hero></app-hero>\n<app-article-card></app-article-card>\n"
+module.exports = "<hero></hero>\n<article-card></article-card>\n"
 
 /***/ }),
 
@@ -1129,7 +1129,7 @@ module.exports = "<p>\n  <button>Click here</button>\n</p>\n"
 /***/ 541:
 /***/ (function(module, exports) {
 
-module.exports = "<app-nav-burger></app-nav-burger>\n<div class=\"outsideContainer\">\n  <img id=\"background-image\" [src]=\"backgroundImagePath\">\n  <div class=\"imgContainer\">\n    <img id=\"logo\" [src]=\"logoImagePath\">\n    <img id=\"banner-image\"[src]=\"bannerImagePath\">\n\n  </div>\n</div>\n"
+module.exports = "<nav-burger></nav-burger>\n<div class=\"outsideContainer\">\n  <img id=\"background-image\" [src]=\"backgroundImagePath\">\n  <div class=\"imgContainer\">\n    <img id=\"logo\" [src]=\"logoImagePath\">\n\n    <img id=\"banner-image\" [src]=\"bannerImagePath\">\n\n  </div>\n</div>"
 
 /***/ }),
 
@@ -1143,7 +1143,7 @@ module.exports = "<p>\n  <input type=\"text\">\n</p>\n"
 /***/ 543:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"navigation-container\">\n    <ul>\n      <li [routerLink]=\"['/']\" >read</li>\n      <li [routerLink]=\"['/']\">submit</li>\n      <li [routerLink]=\"['/']\">the trip?</li>\n    </ul>\n  <app-article-search></app-article-search>\n</div>\n"
+module.exports = "<div class=\"navigation-container\">\n    <ul>\n      <li [routerLink]=\"['/']\">read</li>\n      <li [routerLink]=\"['/']\">submit</li>\n      <li [routerLink]=\"['/']\">the trip?</li>\n    </ul>\n</div>\n"
 
 /***/ }),
 
