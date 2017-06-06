@@ -22,7 +22,7 @@
   width: 75vw;
   height: auto;
   margin: 18.5vh auto;
-  display: box;
+  display: flex;
   display: flex;
   box-align: center;
   align-items: center;

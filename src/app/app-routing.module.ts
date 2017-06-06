@@ -4,12 +4,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { ArticleCardComponent } from './article-card/article-card.component';
 import { ArticlePageComponent } from './article-page/article-page.component';
 import { ArticlesComponent } from './articles/articles.component';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 const routes: Routes = [
   { path: '', component: ArticlesComponent },
   { path: 'articles', component: ArticlesComponent },
   { path: 'article/:id', component: ArticlePageComponent },
-  // { path: 'about', component AboutComponent }
+  { path: 'about', component: AboutUsComponent }
 ];
 
 @NgModule({

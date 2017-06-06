@@ -21,6 +21,7 @@ import { ArticlesComponent } from './articles/articles.component';
 import { ArticleService }          from './article.service';
 import { NavBurgerComponent } from './nav-burger/nav-burger.component';
 import { ArticleSearchComponent } from './article-search/article-search.component';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 
 
@@ -42,7 +43,8 @@ import { ArticleSearchComponent } from './article-search/article-search.componen
     ArticlePageComponent,
     ArticlesComponent,
     NavBurgerComponent,
-    ArticleSearchComponent
+    ArticleSearchComponent,
+    AboutUsComponent
   ],
 
   providers: [ ArticleService],

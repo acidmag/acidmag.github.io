@@ -1,0 +1,26 @@
+.image-container{
+  margin: 0 auto;
+  width: 100%;
+}
+
+.image-container img {
+  width: 100%;
+  position: absolute;
+  top: -450px;
+  z-index: -1;
+  filter: brightness(50%);
+}
+
+h1 {
+  text-align: center;
+  padding-top: 15vh;
+  z-index: 2;
+  color: white;
+  display: block;
+  font: 30px "Courier", sans-serif;
+
+}
+
+.about-us-image{
+  width: 100%;
+}
