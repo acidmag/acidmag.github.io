@@ -1211,7 +1211,7 @@ module.exports = "<p>\n  <input type=\"text\">\n</p>\n"
 /***/ 546:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"navigation-container\">\n    <ul>\n      <li [routerLink]=\"['/']\">read</li>\n      <li [routerLink]=\"['/']\">submit</li>\n      <li [routerLink]=\"['/about`']\">the trip?</li>\n    </ul>\n</div>\n"
+module.exports = "<div class=\"navigation-container\">\n    <ul>\n      <li [routerLink]=\"['/']\">read</li>\n      <li [routerLink]=\"['/']\">submit</li>\n      <li [routerLink]=\"['/about']\">the trip?</li>\n    </ul>\n</div>\n"
 
 /***/ }),
 
