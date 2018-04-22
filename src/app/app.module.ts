@@ -4,11 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
-import { AppRoutingModule }     from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 
 // Imports for loading & configuring the in-memory web api
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService }  from './in-memory-data.service';
+import { InMemoryDataService } from './in-memory-data.service';
 
 
 import { AppComponent } from './app.component';
@@ -18,11 +18,13 @@ import { HeroComponent } from './hero/hero.component';
 import { ArticleCardComponent } from './article-card/article-card.component';
 import { ArticlePageComponent } from './article-page/article-page.component';
 import { ArticlesComponent } from './articles/articles.component';
-import { ArticleService }          from './article.service';
+import { ArticleService } from './article.service';
 import { NavBurgerComponent } from './nav-burger/nav-burger.component';
 import { ArticleSearchComponent } from './article-search/article-search.component';
 import { AboutUsComponent } from './about-us/about-us.component';
-
+import { HttpClientModule } from '@angular/common/http';
+import { SubmitPageComponent } from './submit/submit-page.component';
+import { HeroImageComponent } from './submit/hero-image/hero-image.component';
 
 
 @NgModule({
@@ -30,6 +32,7 @@ import { AboutUsComponent } from './about-us/about-us.component';
     BrowserModule,
     FormsModule,
     HttpModule,
+    HttpClientModule,
     InMemoryWebApiModule.forRoot(InMemoryDataService, { delay: 0 }),
     AppRoutingModule
   ],
@@ -44,11 +47,13 @@ import { AboutUsComponent } from './about-us/about-us.component';
     ArticlesComponent,
     NavBurgerComponent,
     ArticleSearchComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    SubmitPageComponent,
+    HeroImageComponent
   ],
 
-  providers: [ ArticleService],
-  bootstrap: [ AppComponent ]
+  providers: [ArticleService],
+  bootstrap: [AppComponent]
 })
 
 export class AppModule { }

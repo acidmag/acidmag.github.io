@@ -1,0 +1,25 @@
+.image-container {
+  width: 100vw;
+  height: 50vh;
+  background-position: center;
+  background-size: 100%;
+  background: #aaa;
+}
+
+.article-info {
+  color: white;
+  margin: 0 auto;
+  padding-top: 20vh;
+  width: 50%;
+  text-shadow: 2px 2px 20px #000;
+}
+
+.article-info h1,
+h3,
+h5 {
+  padding-bottom: 15px;
+}
+
+.article-info h1 {
+  font-size: 5vh;
+}

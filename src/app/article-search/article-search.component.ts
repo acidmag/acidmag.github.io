@@ -20,7 +20,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 
 
 @Component({
-  selector: 'article-search',
+  selector: 'acid-article-search',
   templateUrl: './article-search.component.html',
   styleUrls: ['./article-search.component.css'],
   providers: [ArticleSearchService]
@@ -52,7 +52,7 @@ export class ArticleSearchComponent implements OnInit {
   }
 
   gotoDetail(article: Articles): void {
-    let link = ['/article', article.id];
+    const link = ['/article', article.id];
     this.router.navigate(link);
   }
 

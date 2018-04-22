@@ -5,8 +5,8 @@ import { Articles } from '../articles';
 import { ArticleService } from '../article.service';
 
 @Component({
-  
-  selector: 'articles',
+
+  selector: 'acid-articles',
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.css']
 })
@@ -22,7 +22,7 @@ export class ArticlesComponent implements OnInit {
 
   getArticles(): void {
     this.articleService.getArticles()
-      .then(articles => this.articles = articles);
+      .subscribe(articles => this.articles = articles);
   }
 
   ngOnInit() {
